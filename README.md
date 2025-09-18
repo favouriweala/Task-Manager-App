@@ -157,29 +157,161 @@ interface Task {
 
 ## 🧠 Enhanced AI Integration Strategy
 
-### 🧱 Modern Code Generation
-- Use AI to scaffold Next.js pages and components with TypeScript
-- Generate Supabase database schemas and RLS policies
-- Create Shadcn/ui components with proper accessibility
-- Example prompt: *"Generate a Next.js page for task management with TypeScript, Supabase integration, and real-time updates"*
+### 🧱 Advanced Code Generation & Scaffolding
 
-### 🧪 Comprehensive Testing
-- Generate unit tests with Jest and React Testing Library
-- Create integration tests for Supabase functions
-- Generate E2E tests with Playwright
-- Example prompt: *"Generate comprehensive tests for the task CRUD operations with Supabase and real-time updates"*
+#### **IDE/CLI Agent Workflows**
+- **Trae IDE Integration:** Leverage built-in AI assistant for real-time code suggestions and refactoring
+- **Cursor IDE:** Use AI-powered code completion and generation with context awareness
+- **CLI Agents:** Utilize `npx create-next-app` with AI-enhanced templates and custom scaffolding scripts
 
-### 📡 API-First Development
-- Generate TypeScript types from Supabase schema
-- Create custom hooks for data fetching with TanStack Query
-- Generate API documentation with TypeDoc
-- Example prompt: *"Based on this Supabase schema, generate TypeScript types and React hooks for task management"*
+#### **Feature Scaffolding Process**
+```bash
+# AI-powered component generation
+npx shadcn-ui@latest add [component] --ai-enhanced
+# Custom scaffolding with AI templates
+npx create-component TaskCard --with-ai --template=dashboard
+# Database schema generation
+supabase gen types typescript --ai-optimize
+```
 
-### 🎨 UI/UX Generation
-- Generate responsive components with Tailwind CSS
-- Create accessible forms with React Hook Form
-- Design dashboard layouts with proper data visualization
-- Example prompt: *"Create a modern task dashboard with drag-and-drop, filtering, and real-time updates using Shadcn/ui"*
+#### **Specific Generation Workflows**
+- **Next.js Pages:** AI generates complete pages with TypeScript, server components, and proper SEO
+- **Supabase Integration:** Auto-generate RLS policies, database functions, and TypeScript types
+- **Component Library:** Create consistent Shadcn/ui components with accessibility and responsive design
+- **API Routes:** Generate Next.js API routes with proper validation, error handling, and documentation
+
+**Example Prompts:**
+- *"Generate a Next.js server component for task management with TypeScript, Supabase real-time subscriptions, and proper error boundaries"*
+- *"Create a Supabase RLS policy for multi-tenant task access with team-based permissions"*
+- *"Scaffold a complete CRUD feature for projects including API routes, components, and database schema"*
+
+### 🧪 Comprehensive Testing Strategy
+
+#### **Testing Tools & Framework Integration**
+- **Jest + React Testing Library:** Unit and integration tests with AI-generated test cases
+- **Playwright:** E2E tests with AI-powered user journey simulation
+- **Supabase Testing:** Database function testing with AI-generated edge cases
+- **Storybook:** Component testing with AI-generated stories and interaction tests
+
+#### **AI-Powered Test Generation**
+```typescript
+// AI generates comprehensive test suites
+describe('TaskManager Component', () => {
+  // AI analyzes component props and generates edge cases
+  test('handles empty task list gracefully', async () => {
+    // AI-generated test implementation
+  });
+  
+  test('validates task creation with invalid data', async () => {
+    // AI considers all validation scenarios
+  });
+});
+```
+
+#### **Testing Workflow Integration**
+- **Pre-commit Hooks:** AI analyzes code changes and suggests relevant tests
+- **Coverage Analysis:** AI identifies untested code paths and generates appropriate tests
+- **Regression Testing:** AI creates tests based on bug reports and user feedback
+- **Performance Testing:** AI generates load tests based on expected usage patterns
+
+**Example Testing Prompts:**
+- *"Generate comprehensive Jest tests for the TaskService class including error handling, edge cases, and async operations"*
+- *"Create Playwright E2E tests for the complete task creation workflow including form validation and real-time updates"*
+- *"Generate Storybook stories for the TaskCard component covering all possible states and interactions"*
+
+### 📚 AI-Driven Documentation Strategy
+
+#### **Automated Documentation Generation**
+- **TypeDoc Integration:** AI enhances generated API docs with usage examples and best practices
+- **JSDoc Comments:** AI generates comprehensive docstrings with parameter descriptions and examples
+- **README Maintenance:** AI keeps documentation synchronized with code changes
+- **Code Comments:** Context-aware inline comments explaining complex business logic
+
+#### **Documentation Workflow**
+```typescript
+/**
+ * AI-generated comprehensive docstring
+ * @description Manages task operations with real-time synchronization
+ * @param {CreateTaskInput} taskData - Task creation parameters
+ * @param {User} currentUser - Authenticated user context
+ * @returns {Promise<Task>} Created task with generated metadata
+ * @throws {ValidationError} When task data is invalid
+ * @example
+ * ```typescript
+ * const task = await createTask({
+ *   title: "Complete project setup",
+ *   priority: "high",
+ *   projectId: "uuid-here"
+ * }, currentUser);
+ * ```
+ */
+async function createTask(taskData: CreateTaskInput, currentUser: User): Promise<Task>
+```
+
+#### **Living Documentation**
+- **Auto-updating README:** AI monitors code changes and updates documentation sections
+- **API Documentation:** Real-time generation of OpenAPI specs from TypeScript types
+- **Component Documentation:** Automatic Storybook documentation with usage guidelines
+- **Architecture Diagrams:** AI-generated system architecture and data flow diagrams
+
+**Example Documentation Prompts:**
+- *"Generate comprehensive JSDoc comments for this TaskService class including all methods, parameters, and usage examples"*
+- *"Update the README.md API section based on the latest TypeScript interface changes"*
+- *"Create detailed inline comments explaining the real-time synchronization logic in this component"*
+
+### 🎯 Context-Aware AI Techniques
+
+#### **API Specification Integration**
+- **OpenAPI Schema Feeding:** Provide complete API specs to AI for consistent code generation
+- **Supabase Schema Context:** Feed database schema to AI for type-safe query generation
+- **GraphQL Schema Integration:** Use schema definitions for resolver and query generation
+
+#### **File Tree & Project Structure Context**
+```bash
+# AI analyzes entire project structure for context-aware suggestions
+tree src/ | ai-analyze --context=nextjs-project --output=suggestions.md
+
+# Project structure feeding for component generation
+ai-generate component TaskList --context-files="src/types/task.ts,src/lib/supabase.ts"
+```
+
+#### **Diff-Based AI Workflows**
+- **PR Review Integration:** AI analyzes git diffs to suggest improvements and catch issues
+- **Incremental Updates:** AI understands code changes and suggests related updates
+- **Migration Assistance:** AI helps with framework upgrades and dependency updates
+- **Refactoring Guidance:** AI suggests refactoring opportunities based on code evolution
+
+#### **Advanced Context Techniques**
+```typescript
+// AI context feeding workflow
+interface AIContext {
+  projectStructure: FileTree;
+  apiSpecs: OpenAPISpec[];
+  databaseSchema: SupabaseSchema;
+  recentChanges: GitDiff[];
+  userPreferences: DeveloperSettings;
+  codebasePatterns: AnalyzedPatterns;
+}
+
+// AI uses full context for intelligent suggestions
+const aiSuggestion = await generateCode({
+  prompt: "Create a new feature for task templates",
+  context: fullProjectContext,
+  constraints: ["follow existing patterns", "maintain type safety"]
+});
+```
+
+#### **Workflow Integration Examples**
+- **Pre-commit Analysis:** AI reviews changes against project patterns and suggests improvements
+- **Feature Planning:** AI analyzes existing codebase to suggest implementation approaches
+- **Dependency Management:** AI suggests optimal package versions based on project requirements
+- **Performance Optimization:** AI identifies bottlenecks using codebase analysis and profiling data
+
+**Example Context-Aware Prompts:**
+- *"Based on the current Supabase schema and existing task components, generate a new TaskTemplate feature with full CRUD operations"*
+- *"Analyze this git diff and suggest related test updates and documentation changes"*
+- *"Using the project's existing authentication patterns, create a new user role management system"*
+- *"Review the current API structure and suggest improvements for better performance and maintainability"*
 
 ---
 
