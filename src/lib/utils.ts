@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { TaskPriority } from "@/types/task"
+import { TaskPriority } from "../types/task"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -18,16 +18,16 @@ export function isOverdue(dueDate: Date): boolean {
   return dueDate < new Date()
 }
 
-export function getPriorityColor(priority: TaskPriority): "default" | "secondary" | "destructive" | "outline" {
+export function getPriorityColor(priority: TaskPriority): "default" | "secondary" | "destructive" | "outline" | "success" | "warning" {
   switch (priority) {
     case 'urgent':
       return 'destructive'
     case 'high':
-      return 'destructive'
+      return 'warning'
     case 'medium':
-      return 'secondary'
+      return 'warning'
     case 'low':
-      return 'outline'
+      return 'success'
     default:
       return 'default'
   }

@@ -1,82 +1,414 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --card: #ffffff;
-  --card-foreground: #171717;
-  --popover: #ffffff;
-  --popover-foreground: #171717;
-  --primary: #0f172a;
-  --primary-foreground: #f8fafc;
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #0f172a;
-  --radius: 0.5rem;
-}
-/* correct the error in ln 26 */
-@theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Zyra Design System - Light Mode */
+  --zyra-primary: #4F46E5;
+  --zyra-secondary: #9333EA;
+  --zyra-accent: #06B6D4;
+  --zyra-background: #F8FAFC;
+  --zyra-surface: #FFFFFF;
+  --zyra-card: #FFFFFF;
+  --zyra-border: #E2E8F0;
+  --zyra-text-primary: #1E293B;
+  --zyra-text-secondary: #64748B;
+  --zyra-success: #10B981;
+  --zyra-warning: #F59E0B;
+  --zyra-danger: #EF4444;
+  
+  /* Keep existing shadcn/ui variables for compatibility */
+  --background: #F8FAFC;
+  --foreground: #1E293B;
+  --card: #FFFFFF;
+  --card-foreground: #1E293B;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E293B;
+  --primary: #4F46E5;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #1E293B;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #F1F5F9;
+  --accent-foreground: #1E293B;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #4F46E5;
+  --radius: 0.75rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: #0a0a0a;
-    --card-foreground: #ededed;
-    --popover: #0a0a0a;
-    --popover-foreground: #ededed;
-    --primary: #ededed;
-    --primary-foreground: #0a0a0a;
-    --secondary: #262626;
-    --secondary-foreground: #ededed;
-    --muted: #262626;
-    --muted-foreground: #a3a3a3;
-    --accent: #262626;
-    --accent-foreground: #ededed;
-    --destructive: #dc2626;
-    --destructive-foreground: #ededed;
-    --border: #262626;
-    --input: #262626;
-    --ring: #d4d4d8;
-  }
+.dark {
+  --background: #0F172A;
+  --foreground: #F1F5F9;
+  --card: #334155;
+  --card-foreground: #F1F5F9;
+  --popover: #334155;
+  --popover-foreground: #F1F5F9;
+  --primary: #6366F1;
+  --primary-foreground: #FFFFFF;
+  --secondary: #475569;
+  --secondary-foreground: #F1F5F9;
+  --muted: #475569;
+  --muted-foreground: #CBD5E1;
+  --accent: #475569;
+  --accent-foreground: #F1F5F9;
+  --destructive: #F87171;
+  --destructive-foreground: #FFFFFF;
+  --border: #475569;
+  --input: #475569;
+  --ring: #6366F1;
 }
+
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background: var(--zyra-background);
+  color: var(--zyra-text-primary);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 * {
   border-color: var(--border);
+}
+
+/* Zyra Design System Base Styles */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 600;
+    color: var(--zyra-text-primary);
+  }
+  
+  .zyra-gradient {
+    background: linear-gradient(135deg, #4F46E5 0%, #9333EA 100%);
+  }
+  
+  .zyra-gradient-hover {
+    background: linear-gradient(135deg, #3730A3 0%, #7C2D92 100%);
+  }
+}
+
+/* Zyra Component Styles */
+@layer components {
+  .zyra-button {
+    background-color: var(--zyra-primary);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    outline: none;
+  }
+  
+  .zyra-button:hover {
+    opacity: 0.9;
+  }
+  
+  .zyra-button:focus {
+    box-shadow: 0 0 0 2px var(--zyra-primary), 0 0 0 4px rgba(79, 70, 229, 0.5);
+  }
+  
+  .zyra-button-secondary {
+    background-color: var(--zyra-secondary);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    outline: none;
+  }
+  
+  .zyra-button-secondary:hover {
+    opacity: 0.9;
+  }
+  
+  .zyra-button-secondary:focus {
+    box-shadow: 0 0 0 2px var(--zyra-secondary), 0 0 0 4px rgba(147, 51, 234, 0.5);
+  }
+  
+  .zyra-card {
+    background-color: var(--zyra-card);
+    border-radius: 0.75rem;
+    border: 1px solid var(--zyra-border);
+    transition: box-shadow 0.2s;
+  }
+  
+  .zyra-status-completed {
+    background-color: var(--zyra-success);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .zyra-status-pending {
+    background-color: var(--zyra-warning);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .zyra-status-overdue {
+    background-color: var(--zyra-danger);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .zyra-header {
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    padding: 1rem 0;
+    background: linear-gradient(135deg, #4F46E5 0%, #9333EA 100%);
+  }
+}
+
+
+/* Mobile-First Responsive Design Utilities */
+@layer utilities {
+  /* Touch-friendly interactions */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  .tap-highlight-none {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Mobile-optimized spacing */
+  .mobile-padding {
+    padding: 0.75rem 1rem;
+  }
+  
+  .mobile-margin {
+    margin: 0.75rem 1rem;
+  }
+  
+  /* Responsive text sizes */
+  .text-responsive-xs {
+    font-size: 0.75rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-xs {
+      font-size: 0.875rem;
+    }
+  }
+  
+  .text-responsive-sm {
+    font-size: 0.875rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-sm {
+      font-size: 1rem;
+    }
+  }
+  
+  .text-responsive-base {
+    font-size: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-base {
+      font-size: 1.125rem;
+    }
+  }
+  
+  .text-responsive-lg {
+    font-size: 1.125rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-lg {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .text-responsive-xl {
+    font-size: 1.25rem;
+  }
+  
+  @media (min-width: 640px) {
+    .text-responsive-xl {
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* Mobile-friendly button sizes */
+  .btn-mobile {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Responsive grid layouts */
+  .grid-responsive-1 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  @media (min-width: 640px) {
+    .grid-responsive-1 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-responsive-1 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .grid-responsive-1 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  
+  .grid-responsive-2 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  @media (min-width: 768px) {
+    .grid-responsive-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-responsive-2 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  .grid-responsive-3 {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-responsive-3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .grid-responsive-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  /* Mobile navigation utilities */
+  .mobile-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: color 0.15s ease-in-out;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Responsive containers */
+  .container-mobile {
+    width: 100%;
+    max-width: 24rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .container-tablet {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .container-desktop {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  /* Mobile-first flex utilities */
+  .flex-mobile-col {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (min-width: 640px) {
+    .flex-mobile-col {
+      flex-direction: row;
+    }
+  }
+  
+  .flex-mobile-row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  @media (min-width: 640px) {
+    .flex-mobile-row {
+      flex-direction: column;
+    }
+  }
+  
+  /* Safe area utilities for mobile devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Mobile scrolling improvements */
+  .scroll-smooth-mobile {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Mobile-optimized shadows */
+  .shadow-mobile {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+  
+  @media (min-width: 640px) {
+    .shadow-mobile {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+  }
+  
+  .shadow-mobile-lg {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  @media (min-width: 640px) {
+    .shadow-mobile-lg {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+  }
 }

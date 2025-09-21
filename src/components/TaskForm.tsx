@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Task, TaskFormData, TaskPriority, TaskStatus } from '@/types/task';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/Input';
-import { Textarea } from '@/components/ui/Textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Task, TaskFormData, TaskPriority, TaskStatus } from '../types/task';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { X, Sparkles, Loader2 } from 'lucide-react';
-import { useAI } from '@/hooks/useAI';
+import { useAI } from '../hooks/useAI';
 
 interface TaskFormProps {
   task?: Task;

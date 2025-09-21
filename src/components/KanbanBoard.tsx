@@ -7,6 +7,7 @@ import {
   DragOverlay,
   DragStartEvent,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
@@ -27,10 +28,10 @@ interface KanbanBoardProps {
 }
 
 const TASK_STATUSES: { status: TaskStatus; label: string; color: string }[] = [
-  { status: 'todo', label: 'To Do', color: 'bg-gray-100' },
-  { status: 'in_progress', label: 'In Progress', color: 'bg-blue-100' },
-  { status: 'review', label: 'Review', color: 'bg-yellow-100' },
-  { status: 'done', label: 'Done', color: 'bg-green-100' },
+  { status: 'todo', label: 'To Do', color: 'bg-zyra-background dark:bg-zyra-card-dark' },
+  { status: 'in_progress', label: 'In Progress', color: 'bg-zyra-primary/10 dark:bg-zyra-primary/20' },
+  { status: 'review', label: 'Review', color: 'bg-zyra-warning/10 dark:bg-zyra-warning/20' },
+  { status: 'done', label: 'Done', color: 'bg-zyra-success/10 dark:bg-zyra-success/20' },
 ];
 
 export function KanbanBoard({
@@ -46,6 +47,12 @@ export function KanbanBoard({
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 8,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
       },
     })
   );
@@ -87,7 +94,7 @@ export function KanbanBoard({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex gap-3 sm:gap-6 overflow-x-auto pb-4 min-h-[60vh]">
+      <div className="flex gap-3 sm:gap-4 lg:gap-6 overflow-x-auto pb-4 sm:pb-6 min-h-[60vh] mobile-padding sm:px-0 touch-manipulation">
         {TASK_STATUSES.map((column) => {
           const columnTasks = getTasksByStatus(column.status);
           
@@ -108,7 +115,7 @@ export function KanbanBoard({
 
       <DragOverlay>
         {activeTask ? (
-          <div className="rotate-3 opacity-90">
+          <div className="rotate-2 opacity-95 scale-105 shadow-2xl">
             <DraggableTaskCard
               task={activeTask}
               onEdit={onTaskEdit}

@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import { Task } from '@/types/task';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { formatDate, isOverdue, getPriorityColor, cn } from '@/lib/utils';
-import { useSwipeGestures } from '@/hooks/useSwipeGestures';
+import { Task } from '../types/task';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import { formatDate, isOverdue, getPriorityColor, cn } from '../lib/utils';
+import { useSwipeGestures } from '../hooks/useSwipeGestures';
 import { 
   CheckCircle2, 
   Circle, 
@@ -49,10 +49,10 @@ export function TaskCard({ task, onToggleComplete, onEdit, onDelete }: TaskCardP
     <div
       ref={cardRef}
       className={cn(
-        'bg-white rounded-lg border border-gray-200 p-3 sm:p-4 shadow-sm hover:shadow-md transition-all duration-200 touch-manipulation select-none',
-        'active:scale-[0.98] active:shadow-sm',
-        isCompleted && 'opacity-75 bg-gray-50',
-        isTaskOverdue && 'border-red-200 bg-red-50'
+        'zyra-card p-4 sm:p-5 shadow-zyra-card hover:shadow-zyra-card-hover transition-all duration-300 touch-manipulation select-none',
+        'active:scale-[0.98] active:shadow-zyra-card',
+        isCompleted && 'opacity-75 bg-zyra-background dark:bg-zyra-card-dark',
+        isTaskOverdue && 'border-zyra-danger/30 bg-red-50 dark:bg-red-950/20'
       )}
     >
       {/* Mobile swipe indicators */}
@@ -68,10 +68,10 @@ export function TaskCard({ task, onToggleComplete, onEdit, onDelete }: TaskCardP
         <div className="flex items-start space-x-2 sm:space-x-3 flex-1">
           <button
             onClick={() => onToggleComplete(task.id)}
-            className="mt-1 text-gray-500 hover:text-blue-600 transition-colors p-1 -m-1 touch-manipulation"
+            className="mt-1 text-zyra-text-secondary dark:text-zyra-text-secondary-dark hover:text-zyra-primary transition-colors p-1 -m-1 touch-manipulation"
           >
             {isCompleted ? (
-              <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
+              <CheckCircle2 className="h-5 w-5 sm:h-6 sm:w-6 text-zyra-success" />
             ) : (
               <Circle className="h-5 w-5 sm:h-6 sm:w-6" />
             )}
@@ -79,14 +79,14 @@ export function TaskCard({ task, onToggleComplete, onEdit, onDelete }: TaskCardP
           
           <div className="flex-1 min-w-0">
             <h3 className={cn(
-              "font-medium text-gray-900 text-sm sm:text-base",
-              isCompleted && "line-through text-gray-500"
+              "font-semibold text-zyra-text-primary dark:text-zyra-text-primary-dark text-sm sm:text-base",
+              isCompleted && "line-through text-zyra-text-secondary dark:text-zyra-text-secondary-dark"
             )}>
               {task.title}
             </h3>
             
             {task.description && (
-              <p className="text-xs sm:text-sm text-gray-600 mt-1 line-clamp-2">
+              <p className="text-xs sm:text-sm text-zyra-text-secondary dark:text-zyra-text-secondary-dark mt-1 line-clamp-2">
                 {task.description}
               </p>
             )}
@@ -107,18 +107,18 @@ export function TaskCard({ task, onToggleComplete, onEdit, onDelete }: TaskCardP
               )}
               
               {task.assignee_id && (
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-xs text-zyra-text-secondary dark:text-zyra-text-secondary-dark">
                   <User className="h-3 w-3 mr-1" />
                   <span className="hidden sm:inline">Assigned</span>
                 </div>
               )}
             </div>
             
-            <div className="flex items-center gap-2 sm:gap-4 mt-2 text-xs text-gray-500 flex-wrap">
+            <div className="flex items-center gap-2 sm:gap-4 mt-2 text-xs text-zyra-text-secondary dark:text-zyra-text-secondary-dark flex-wrap">
               {task.due_date && (
                 <div className={cn(
                   "flex items-center",
-                  isTaskOverdue && "text-red-600"
+                  isTaskOverdue && "text-zyra-danger"
                 )}>
                   {isTaskOverdue ? (
                     <AlertCircle className="h-3 w-3 mr-1" />
@@ -150,7 +150,7 @@ export function TaskCard({ task, onToggleComplete, onEdit, onDelete }: TaskCardP
             variant="ghost"
             size="sm"
             onClick={() => onDelete(task.id)}
-            className="h-8 w-8 p-0 text-red-600 hover:text-red-700 touch-manipulation"
+            className="h-8 w-8 p-0 text-zyra-danger hover:text-zyra-danger hover:bg-red-50 dark:hover:bg-red-950/20 touch-manipulation"
           >
             <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
           </Button>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Task, TaskFormData, TaskFilters, TaskSortOptions } from '@/types/task';
 import { TaskService } from '@/lib/tasks/taskService';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@supabase/supabase-js';
 import { useUser } from '@supabase/auth-helpers-react';
 
 export function useTasksWithSupabase(
@@ -9,6 +9,10 @@ export function useTasksWithSupabase(
   initialSort?: TaskSortOptions
 ) {
   const user = useUser();
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

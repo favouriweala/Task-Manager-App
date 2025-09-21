@@ -34,10 +34,10 @@ const statusOptions: { value: TaskStatus; label: string; icon: React.ReactNode }
 ];
 
 const priorityOptions: { value: TaskPriority; label: string; color: string }[] = [
-  { value: 'low', label: 'Low', color: 'bg-green-100 text-green-800 border-green-200' },
-  { value: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800 border-yellow-200' },
-  { value: 'high', label: 'High', color: 'bg-orange-100 text-orange-800 border-orange-200' },
-  { value: 'urgent', label: 'Urgent', color: 'bg-red-100 text-red-800 border-red-200' },
+  { value: 'low', label: 'Low', color: 'bg-zyra-success/10 text-zyra-success border-zyra-success/20' },
+  { value: 'medium', label: 'Medium', color: 'bg-zyra-warning/10 text-zyra-warning border-zyra-warning/20' },
+  { value: 'high', label: 'High', color: 'bg-zyra-warning/10 text-zyra-warning border-zyra-warning/20' },
+  { value: 'urgent', label: 'Urgent', color: 'bg-zyra-danger/10 text-zyra-danger border-zyra-danger/20' },
 ];
 
 const sortOptions = [
@@ -167,206 +167,276 @@ export function TaskDashboard() {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">Task Dashboard</h1>
-          <p className="text-gray-600 mt-1">Manage and track your tasks efficiently</p>
-        </div>
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            onClick={() => setShowFilterPanel(!showFilterPanel)}
-            className="flex items-center gap-2"
-          >
-            <Filter className="h-4 w-4" />
-            Filters
-          </Button>
-          <Button onClick={() => setShowTaskForm(true)} className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            New Task
-          </Button>
+    <div className="space-y-8">
+      {/* Header with enhanced mobile-first responsive design */}
+      <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/30 dark:via-indigo-950/30 dark:to-purple-950/30 mobile-padding sm:p-6 lg:p-8 rounded-2xl border border-blue-100 dark:border-blue-900/30 mb-6 sm:mb-8 shadow-mobile">
+        <div className="flex-mobile-col gap-4 sm:gap-6">
+          <div className="space-y-2 sm:space-y-3">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Task Dashboard
+            </h1>
+            <p className="text-gray-600 dark:text-gray-300 text-responsive-sm sm:text-base lg:text-lg">
+              Manage your tasks with AI-powered insights and real-time collaboration
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            <Button 
+              onClick={() => setShowFilterPanel(!showFilterPanel)}
+              variant="outline"
+              className="btn-mobile flex items-center justify-center gap-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800 shadow-mobile hover:shadow-mobile-lg transition-all duration-200 touch-manipulation"
+            >
+              <Filter className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-responsive-sm">{showFilterPanel ? 'Hide Filters' : 'Show Filters'}</span>
+            </Button>
+            
+            <Button 
+              onClick={() => setShowTaskForm(true)} 
+              className="btn-mobile flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 shadow-mobile hover:shadow-mobile-lg transition-all duration-200 touch-manipulation"
+            >
+              <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="text-responsive-sm">New Task</span>
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* AI Insights */}
-      <AIInsights tasks={tasks} className="lg:col-span-2" />
+      {/* AI Insights - Enhanced with mobile-first responsive design */}
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-950/20 mobile-padding sm:p-6 rounded-2xl border border-purple-100 dark:border-purple-900/30 shadow-mobile">
+        <AIInsights tasks={tasks} className="w-full" />
+      </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Left Sidebar - Filters */}
+      {/* Main Content Grid with improved mobile-first spacing */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+        {/* Enhanced Filter Panel - Collapsible on mobile */}
         {showFilterPanel && (
-          <div className="lg:col-span-1">
-            <FilterPanel
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-              onSortChange={handleSortChange}
-              currentSort={sort}
-              showSorting={true}
-            />
+          <div className="lg:col-span-1 order-2 lg:order-1">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-mobile">
+              <FilterPanel
+                filters={filters}
+                onFiltersChange={handleFiltersChange}
+                onClearFilters={clearFilters}
+              />
+            </div>
           </div>
         )}
 
-        {/* Main Content */}
-        <div className={showFilterPanel ? "lg:col-span-3" : "lg:col-span-4"}>
-          {/* Advanced Search */}
-          <div className="mb-6">
-            <AdvancedSearch
-              onSearch={handleSearch}
-              onFiltersChange={handleFiltersChange}
-              currentFilters={filters}
-            />
-          </div>
-
-          {/* Statistics Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-            <Card>
-              <CardContent className="p-4">
+        {/* Main Task Area */}
+        <div className={`${showFilterPanel ? "lg:col-span-3" : "lg:col-span-4"} order-1 lg:order-2`}>
+          {/* Enhanced Statistics Cards with mobile-first responsive grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <Card className="bg-gradient-to-br from-blue-50 to-cyan-100 dark:from-blue-950/30 dark:to-cyan-900/30 border-blue-200 dark:border-blue-800 hover:shadow-mobile-lg transition-all duration-200 touch-manipulation">
+              <CardContent className="mobile-padding sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Total</p>
-                    <p className="text-2xl font-bold text-gray-900">{taskStats.total}</p>
+                    <p className="text-xs sm:text-sm font-medium text-blue-700 dark:text-blue-300">To Do</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-blue-900 dark:text-blue-100">{taskStats.todo}</p>
                   </div>
-                  <Circle className="h-8 w-8 text-gray-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-blue-200 dark:bg-blue-800 rounded-xl flex items-center justify-center">
+                    <Circle className="h-3 w-3 sm:h-4 sm:w-4 lg:h-6 lg:w-6 text-blue-600 dark:text-blue-400" />
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="bg-gradient-to-br from-yellow-50 to-orange-100 dark:from-yellow-950/30 dark:to-orange-900/30 border-yellow-200 dark:border-yellow-800 hover:shadow-mobile-lg transition-all duration-200 touch-manipulation">
+              <CardContent className="mobile-padding sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">To Do</p>
-                    <p className="text-2xl font-bold text-blue-600">{taskStats.todo}</p>
+                    <p className="text-xs sm:text-sm font-medium text-yellow-700 dark:text-yellow-300">In Progress</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-yellow-900 dark:text-yellow-100">{taskStats.in_progress}</p>
                   </div>
-                  <Circle className="h-8 w-8 text-blue-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-yellow-200 dark:bg-yellow-800 rounded-xl flex items-center justify-center">
+                    <Clock className="h-3 w-3 sm:h-4 sm:w-4 lg:h-6 lg:w-6 text-yellow-600 dark:text-yellow-400" />
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/30 dark:to-purple-900/30 border-purple-200 dark:border-purple-800 hover:shadow-mobile-lg transition-all duration-200 touch-manipulation">
+              <CardContent className="mobile-padding sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">In Progress</p>
-                    <p className="text-2xl font-bold text-yellow-600">{taskStats.in_progress}</p>
+                    <p className="text-xs sm:text-sm font-medium text-purple-700 dark:text-purple-300">Review</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-900 dark:text-purple-100">{taskStats.review}</p>
                   </div>
-                  <Clock className="h-8 w-8 text-yellow-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-purple-200 dark:bg-purple-800 rounded-xl flex items-center justify-center">
+                    <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 lg:h-6 lg:w-6 text-purple-600 dark:text-purple-400" />
+                  </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardContent className="p-4">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-950/30 dark:to-emerald-900/30 border-green-200 dark:border-green-800 hover:shadow-mobile-lg transition-all duration-200 touch-manipulation">
+              <CardContent className="mobile-padding sm:p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">Review</p>
-                    <p className="text-2xl font-bold text-orange-600">{taskStats.review}</p>
+                    <p className="text-xs sm:text-sm font-medium text-green-700 dark:text-green-300">Done</p>
+                    <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-900 dark:text-green-100">{taskStats.done}</p>
                   </div>
-                  <AlertCircle className="h-8 w-8 text-orange-400" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Done</p>
-                    <p className="text-2xl font-bold text-green-600">{taskStats.done}</p>
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green-200 dark:bg-green-800 rounded-xl flex items-center justify-center">
+                    <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 lg:h-6 lg:w-6 text-green-600 dark:text-green-400" />
                   </div>
-                  <CheckCircle2 className="h-8 w-8 text-green-400" />
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          {/* Task Tabs with Time Tracking */}
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid w-full grid-cols-7">
-              <TabsTrigger value="all">All ({taskStats.total})</TabsTrigger>
-              <TabsTrigger value="todo">To Do ({taskStats.todo})</TabsTrigger>
-              <TabsTrigger value="in_progress">In Progress ({taskStats.in_progress})</TabsTrigger>
-              <TabsTrigger value="review">Review ({taskStats.review})</TabsTrigger>
-              <TabsTrigger value="done">Done ({taskStats.done})</TabsTrigger>
-              <TabsTrigger value="timer" className="flex items-center gap-1">
-                <TimerIcon className="h-3 w-3" />
-                Timer
-              </TabsTrigger>
-              <TabsTrigger value="reports" className="flex items-center gap-1">
-                <BarChart3 className="h-3 w-3" />
-                Reports
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="all" className="mt-6">
-              <TaskList
-                tasks={getTasksByTab('all')}
-                onToggleComplete={handleToggleComplete}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            </TabsContent>
-
-            <TabsContent value="todo" className="mt-6">
-              <TaskList
-                tasks={getTasksByTab('todo')}
-                onToggleComplete={handleToggleComplete}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            </TabsContent>
-
-            <TabsContent value="in_progress" className="mt-6">
-              <TaskList
-                tasks={getTasksByTab('in_progress')}
-                onToggleComplete={handleToggleComplete}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            </TabsContent>
-
-            <TabsContent value="review" className="mt-6">
-              <TaskList
-                tasks={getTasksByTab('review')}
-                onToggleComplete={handleToggleComplete}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            </TabsContent>
-
-            <TabsContent value="done" className="mt-6">
-              <TaskList
-                tasks={getTasksByTab('done')}
-                onToggleComplete={handleToggleComplete}
-                onEdit={handleEditTask}
-                onDelete={handleDeleteTask}
-              />
-            </TabsContent>
-
-            <TabsContent value="timer" className="mt-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Timer />
-                <TimeEntryList />
+          {/* Enhanced Task Tabs with mobile-first responsive design */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-mobile overflow-hidden">
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <div className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <TabsList className="grid w-full grid-cols-3 sm:grid-cols-7 bg-transparent h-auto p-0">
+                  <TabsTrigger 
+                    value="all" 
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-blue-500 mobile-padding sm:px-4 py-3 text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <span className="hidden sm:inline">All Tasks</span>
+                    <span className="sm:hidden">All</span>
+                    <span className="ml-1 sm:ml-2 text-xs bg-gray-200 dark:bg-gray-700 px-1.5 py-0.5 rounded-full">
+                      {tasks.length}
+                    </span>
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="todo" 
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-blue-500 mobile-padding sm:px-4 py-3 text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <Circle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">To Do</span>
+                    <span className="sm:hidden">Todo</span>
+                    <span className="ml-1 sm:ml-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded-full">
+                      {taskStats.todo}
+                    </span>
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="in_progress" 
+                    className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-yellow-500 mobile-padding sm:px-4 py-3 text-xs sm:text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">In Progress</span>
+                    <span className="sm:hidden">Progress</span>
+                    <span className="ml-1 sm:ml-2 text-xs bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 px-1.5 py-0.5 rounded-full">
+                      {taskStats.in_progress}
+                    </span>
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="review" 
+                    className="hidden sm:flex data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-purple-500 px-4 py-3 text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <AlertCircle className="w-4 h-4 mr-2" />
+                    Review
+                    <span className="ml-2 text-xs bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 px-1.5 py-0.5 rounded-full">
+                      {taskStats.review}
+                    </span>
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="done" 
+                    className="hidden sm:flex data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-green-500 px-4 py-3 text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <CheckCircle2 className="w-4 h-4 mr-2" />
+                    Done
+                    <span className="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-1.5 py-0.5 rounded-full">
+                      {taskStats.done}
+                    </span>
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="timer" 
+                    className="hidden sm:flex data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-indigo-500 px-4 py-3 text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <TimerIcon className="w-4 h-4 mr-2" />
+                    Timer
+                  </TabsTrigger>
+                  
+                  <TabsTrigger 
+                    value="reports" 
+                    className="hidden sm:flex data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-mobile rounded-none border-b-2 border-transparent data-[state=active]:border-pink-500 px-4 py-3 text-sm font-medium transition-all duration-200 touch-manipulation"
+                  >
+                    <BarChart3 className="w-4 h-4 mr-2" />
+                    Reports
+                  </TabsTrigger>
+                </TabsList>
               </div>
-            </TabsContent>
 
-            <TabsContent value="reports" className="mt-6">
-              <TimeReports />
-            </TabsContent>
-          </Tabs>
+              <div className="p-6">
+                <TabsContent value="all" className="mt-0">
+                  <TaskList
+                    tasks={getTasksByTab('all')}
+                    onToggleComplete={handleToggleComplete}
+                    onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </TabsContent>
+
+                <TabsContent value="todo" className="mt-0">
+                  <TaskList
+                    tasks={getTasksByTab('todo')}
+                    onToggleComplete={handleToggleComplete}
+                    onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </TabsContent>
+
+                <TabsContent value="in_progress" className="mt-0">
+                  <TaskList
+                    tasks={getTasksByTab('in_progress')}
+                    onToggleComplete={handleToggleComplete}
+                    onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </TabsContent>
+
+                <TabsContent value="review" className="mt-0">
+                  <TaskList
+                    tasks={getTasksByTab('review')}
+                    onToggleComplete={handleToggleComplete}
+                    onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </TabsContent>
+
+                <TabsContent value="done" className="mt-0">
+                  <TaskList
+                    tasks={getTasksByTab('done')}
+                    onToggleComplete={handleToggleComplete}
+                    onEdit={handleEditTask}
+                    onDelete={handleDeleteTask}
+                  />
+                </TabsContent>
+
+                <TabsContent value="timer" className="mt-0">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    <div className="bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 mobile-padding sm:p-6 rounded-xl border border-indigo-200 dark:border-indigo-800">
+                      <Timer />
+                    </div>
+                    <div className="bg-white dark:bg-gray-900 mobile-padding sm:p-6 rounded-xl border border-gray-200 dark:border-gray-700">
+                      <TimeEntryList />
+                    </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reports" className="mt-0">
+                  <div className="bg-gradient-to-br from-pink-50 to-rose-50 dark:from-pink-950/30 dark:to-rose-950/30 mobile-padding sm:p-6 rounded-xl border border-pink-200 dark:border-pink-800">
+                    <TimeReports />
+                  </div>
+                </TabsContent>
+              </div>
+            </Tabs>
+          </div>
         </div>
       </div>
 
-      {/* Task Form Modal */}
+      {/* Task Form Modal with mobile-first responsive design */}
       {showTaskForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mobile-padding sm:p-4 z-50 safe-top safe-bottom">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl mobile-padding sm:p-6 w-full max-w-md mx-4 shadow-mobile-lg">
             <TaskForm
-              task={editingTask || undefined}
-              isOpen={showTaskForm}
-              onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+              task={editingTask}
+              onSubmit={handleTaskSubmit}
               onCancel={() => {
                 setShowTaskForm(false);
                 setEditingTask(null);

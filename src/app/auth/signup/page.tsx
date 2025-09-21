@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 export default function SignupPage() {
   return (
     <AuthGuard requireAuth={false}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-zyra-background to-zyra-surface flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div className="text-center">
             <Link href="/" className="inline-block">
-              <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+              <h1 className="text-4xl font-bold text-zyra-primary">
                 Zyra
               </h1>
             </Link>
@@ -24,11 +24,11 @@ export default function SignupPage() {
           <SignupForm />
           
           <div className="text-center">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-zyra-text-secondary">
               Already have an account?{' '}
               <Link 
                 href="/auth/login" 
-                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                className="font-medium text-zyra-primary hover:text-zyra-primary/80"
               >
                 Sign in here
               </Link>

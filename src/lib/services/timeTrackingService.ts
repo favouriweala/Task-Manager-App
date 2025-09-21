@@ -1,9 +1,13 @@
-import { supabase } from '../supabase/client';
+import { createClient } from '@supabase/supabase-js'
 import { TimeEntry, WorkSession, TimeReport, TimeTrackingSettings, TimeTrackingSummary, TimerState } from '../../types/task';
 
 export class TimeTrackingService {
   // Time Entry Management
   static async createTimeEntry(entry: Omit<TimeEntry, 'id' | 'created_at' | 'updated_at'>): Promise<TimeEntry> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_entries')
       .insert([entry])
@@ -31,6 +35,10 @@ export class TimeTrackingService {
   }
 
   static async stopTimer(entryId: string): Promise<TimeEntry> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const endTime = new Date().toISOString();
     
     // Get the entry to calculate duration
@@ -62,6 +70,10 @@ export class TimeTrackingService {
   }
 
   static async pauseTimer(entryId: string): Promise<TimeEntry> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_entries')
       .update({ status: 'paused' })
@@ -74,6 +86,10 @@ export class TimeTrackingService {
   }
 
   static async resumeTimer(entryId: string): Promise<TimeEntry> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_entries')
       .update({ status: 'active' })
@@ -86,6 +102,10 @@ export class TimeTrackingService {
   }
 
   static async stopActiveTimers(userId: string): Promise<void> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data: activeEntries } = await supabase
       .from('time_entries')
       .select('id')
@@ -100,6 +120,10 @@ export class TimeTrackingService {
   }
 
   static async getActiveTimer(userId: string): Promise<TimeEntry | null> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_entries')
       .select('*')
@@ -120,6 +144,10 @@ export class TimeTrackingService {
     endDate?: string;
     status?: string;
   }): Promise<TimeEntry[]> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     let query = supabase
       .from('time_entries')
       .select('*')
@@ -138,6 +166,10 @@ export class TimeTrackingService {
   }
 
   static async updateTimeEntry(entryId: string, updates: Partial<TimeEntry>): Promise<TimeEntry> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_entries')
       .update(updates)
@@ -150,6 +182,10 @@ export class TimeTrackingService {
   }
 
   static async deleteTimeEntry(entryId: string): Promise<void> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { error } = await supabase
       .from('time_entries')
       .delete()
@@ -160,6 +196,10 @@ export class TimeTrackingService {
 
   // Time Tracking Summary
   static async getTaskTimeSummary(taskId: string, userId: string): Promise<TimeTrackingSummary | null> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('task_time_summary')
       .select('*')
@@ -172,6 +212,10 @@ export class TimeTrackingService {
   }
 
   static async getUserTimeSummary(userId: string, dateRange?: { start: string; end: string }): Promise<TimeTrackingSummary[]> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     let query = supabase
       .from('task_time_summary')
       .select('*')
@@ -191,6 +235,10 @@ export class TimeTrackingService {
 
   // Settings Management
   static async getTimeTrackingSettings(userId: string): Promise<TimeTrackingSettings | null> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_tracking_settings')
       .select('*')
@@ -202,6 +250,10 @@ export class TimeTrackingService {
   }
 
   static async updateTimeTrackingSettings(userId: string, settings: Partial<TimeTrackingSettings>): Promise<TimeTrackingSettings> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_tracking_settings')
       .upsert({
@@ -223,6 +275,10 @@ export class TimeTrackingService {
     taskIds?: string[];
     projectIds?: string[];
   }): Promise<any> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase.rpc('generate_time_report', {
       p_user_id: userId,
       p_report_type: reportConfig.type,
@@ -237,6 +293,10 @@ export class TimeTrackingService {
   }
 
   static async saveTimeReport(report: Omit<TimeReport, 'id' | 'created_at' | 'updated_at'>): Promise<TimeReport> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_reports')
       .insert([report])
@@ -248,6 +308,10 @@ export class TimeTrackingService {
   }
 
   static async getTimeReports(userId: string): Promise<TimeReport[]> {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase
       .from('time_reports')
       .select('*')

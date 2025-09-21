@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Checkbox } from '../ui/checkbox';
 import { Slider } from '../ui/slider';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { DatePickerWithRange } from '../ui/date-range-picker';
 import { TaskFilters, TaskStatus, TaskPriority, TaskSortOptions } from '../../types/task';
@@ -127,17 +127,17 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   }).length;
 
   const statusOptions = [
-    { value: 'todo', label: 'To Do', color: 'bg-gray-500' },
-    { value: 'in_progress', label: 'In Progress', color: 'bg-blue-500' },
-    { value: 'review', label: 'Review', color: 'bg-yellow-500' },
-    { value: 'done', label: 'Done', color: 'bg-green-500' }
+    { value: 'todo', label: 'To Do', color: 'bg-zyra-text-secondary' },
+    { value: 'in_progress', label: 'In Progress', color: 'bg-zyra-primary' },
+    { value: 'review', label: 'Review', color: 'bg-zyra-warning' },
+    { value: 'done', label: 'Done', color: 'bg-zyra-success' }
   ];
 
   const priorityOptions = [
-    { value: 'low', label: 'Low', color: 'bg-green-500' },
-    { value: 'medium', label: 'Medium', color: 'bg-yellow-500' },
-    { value: 'high', label: 'High', color: 'bg-orange-500' },
-    { value: 'urgent', label: 'Urgent', color: 'bg-red-500' }
+    { value: 'low', label: 'Low', color: 'bg-zyra-success' },
+    { value: 'medium', label: 'Medium', color: 'bg-zyra-warning' },
+    { value: 'high', label: 'High', color: 'bg-zyra-warning' },
+    { value: 'urgent', label: 'Urgent', color: 'bg-zyra-danger' }
   ];
 
   const sortOptions = [
@@ -152,14 +152,14 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
   ];
 
   return (
-    <Card className={className}>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center justify-between">
+    <Card className={`${className} shadow-mobile border-zyra-border bg-zyra-card`}>
+      <CardHeader className="pb-3 mobile-padding sm:p-6">
+        <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <Filter className="h-5 w-5" />
-            Filters
+            <Filter className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
+            <span className="text-responsive-base font-semibold text-zyra-text-primary">Filters</span>
             {activeFilterCount > 0 && (
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs">
                 {activeFilterCount}
               </Badge>
             )}
@@ -169,21 +169,21 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
               variant="ghost"
               size="sm"
               onClick={handleClearAll}
-              className="text-gray-500 hover:text-gray-700"
+              className="btn-mobile text-zyra-text-secondary hover:text-zyra-text-primary hover:bg-zyra-background touch-manipulation"
             >
-              <X className="h-4 w-4" />
-              Clear All
+              <X className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+              <span className="text-responsive-xs">Clear All</span>
             </Button>
           )}
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
-        {/* Sorting */}
+      <CardContent className="space-y-4 sm:space-y-6 mobile-padding sm:p-6 pt-0">
+        {/* Enhanced Sorting with mobile-first design */}
         {showSorting && onSortChange && (
-          <div className="space-y-3 pb-4 border-b">
-            <h4 className="text-sm font-medium">Sort By</h4>
-            <div className="flex gap-2">
+          <div className="space-y-3 pb-4 border-b border-zyra-border">
+            <h4 className="text-sm font-medium text-zyra-text-primary">Sort By</h4>
+            <div className="flex flex-col sm:flex-row gap-2">
               <Select
                 value={currentSort?.field || 'created_at'}
                 onValueChange={(value) => onSortChange({
@@ -191,12 +191,16 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   direction: currentSort?.direction || 'desc'
                 })}
               >
-                <SelectTrigger className="flex-1">
+                <SelectTrigger className="flex-1 btn-mobile bg-zyra-card border-zyra-border text-zyra-text-primary touch-manipulation">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-zyra-card border-zyra-border">
                   {sortOptions.map(option => (
-                    <SelectItem key={option.value} value={option.value}>
+                    <SelectItem 
+                      key={option.value} 
+                      value={option.value}
+                      className="text-zyra-text-primary hover:bg-zyra-background"
+                    >
                       {option.label}
                     </SelectItem>
                   ))}
@@ -210,18 +214,19 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   field: currentSort?.field || 'created_at',
                   direction: currentSort?.direction === 'asc' ? 'desc' : 'asc'
                 })}
+                className="btn-mobile border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 touch-manipulation"
               >
                 {currentSort?.direction === 'asc' ? (
-                  <ChevronUp className="h-4 w-4" />
+                  <ChevronUp className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600 dark:text-gray-300" />
                 ) : (
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600 dark:text-gray-300" />
                 )}
               </Button>
             </div>
           </div>
         )}
 
-        {/* Filter Sections */}
+        {/* Enhanced Filter Sections with mobile-first design */}
         {sections.map(section => (
           <Collapsible
             key={section.id}
@@ -231,36 +236,37 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost"
-                className="w-full justify-between p-0 h-auto font-medium"
+                className="w-full justify-between p-0 h-auto font-medium text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation mobile-padding sm:p-2 rounded-lg"
               >
                 <div className="flex items-center gap-2">
-                  {section.icon}
-                  {section.title}
+                  <span className="text-blue-600 dark:text-blue-400">{section.icon}</span>
+                  <span className="text-responsive-sm font-medium">{section.title}</span>
                 </div>
                 {section.isOpen ? (
-                  <ChevronUp className="h-4 w-4" />
+                  <ChevronUp className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 dark:text-gray-400" />
                 ) : (
-                  <ChevronDown className="h-4 w-4" />
+                  <ChevronDown className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500 dark:text-gray-400" />
                 )}
               </Button>
             </CollapsibleTrigger>
             
-            <CollapsibleContent className="space-y-3 pt-3">
-              {/* Status Filter */}
+            <CollapsibleContent className="space-y-3 pt-3 mobile-padding sm:px-2">
+              {/* Enhanced Status Filter */}
               {section.id === 'status' && (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {statusOptions.map(option => (
-                    <div key={option.value} className="flex items-center space-x-2">
+                    <div key={option.value} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation">
                       <Checkbox
                         id={`status-${option.value}`}
                         checked={filters.status?.includes(option.value as TaskStatus) || false}
                         onCheckedChange={(checked) => 
                           handleArrayFilterChange('status', option.value, checked as boolean)
                         }
+                        className="border-gray-300 dark:border-gray-600 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
                       />
                       <label
                         htmlFor={`status-${option.value}`}
-                        className="flex items-center gap-2 text-sm cursor-pointer"
+                        className="flex items-center gap-2 text-responsive-xs cursor-pointer flex-1 text-gray-700 dark:text-gray-300"
                       >
                         <div className={`w-3 h-3 rounded-full ${option.color}`} />
                         {option.label}
@@ -270,21 +276,22 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </div>
               )}
 
-              {/* Priority Filter */}
+              {/* Enhanced Priority Filter */}
               {section.id === 'priority' && (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {priorityOptions.map(option => (
-                    <div key={option.value} className="flex items-center space-x-2">
+                    <div key={option.value} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation">
                       <Checkbox
                         id={`priority-${option.value}`}
                         checked={filters.priority?.includes(option.value as TaskPriority) || false}
                         onCheckedChange={(checked) => 
                           handleArrayFilterChange('priority', option.value, checked as boolean)
                         }
+                        className="border-gray-300 dark:border-gray-600 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
                       />
                       <label
                         htmlFor={`priority-${option.value}`}
-                        className="flex items-center gap-2 text-sm cursor-pointer"
+                        className="flex items-center gap-2 text-responsive-xs cursor-pointer flex-1 text-gray-700 dark:text-gray-300"
                       >
                         <div className={`w-3 h-3 rounded-full ${option.color}`} />
                         {option.label}
@@ -294,37 +301,38 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </div>
               )}
 
-              {/* Date Range Filter */}
+              {/* Enhanced Date Range Filter */}
               {section.id === 'dates' && (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Date Range</label>
+                    <label className="text-responsive-xs font-medium mb-2 block text-gray-900 dark:text-gray-100">Date Range</label>
                     <DatePickerWithRange
                       date={dateRange}
                       onDateChange={handleDateRangeChange}
                     />
                   </div>
                   
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation">
                     <Checkbox
                       id="overdue"
                       checked={filters.overdue || false}
                       onCheckedChange={(checked) => 
                         handleFilterChange('overdue', checked || undefined)
                       }
+                      className="border-gray-300 dark:border-gray-600 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
                     />
-                    <label htmlFor="overdue" className="text-sm cursor-pointer">
+                    <label htmlFor="overdue" className="text-responsive-xs cursor-pointer flex-1 text-gray-700 dark:text-gray-300">
                       Show overdue tasks only
                     </label>
                   </div>
                 </div>
               )}
 
-              {/* Time Tracking Filters */}
+              {/* Enhanced Time Tracking Filters */}
               {section.id === 'time' && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">
+                <div className="space-y-5">
+                  <div className="space-y-3">
+                    <label className="text-responsive-xs font-medium block text-gray-900 dark:text-gray-100">
                       Estimated Hours: {estimatedHoursRange[0]}h - {estimatedHoursRange[1]}h
                     </label>
                     <Slider
@@ -333,12 +341,12 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                       max={40}
                       min={0}
                       step={0.5}
-                      className="w-full"
+                      className="w-full touch-manipulation"
                     />
                   </div>
                   
-                  <div>
-                    <label className="text-sm font-medium mb-2 block">
+                  <div className="space-y-3">
+                    <label className="text-responsive-xs font-medium block text-gray-900 dark:text-gray-100">
                       Actual Hours: {actualHoursRange[0]}h - {actualHoursRange[1]}h
                     </label>
                     <Slider
@@ -347,33 +355,35 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                       max={40}
                       min={0}
                       step={0.5}
-                      className="w-full"
+                      className="w-full touch-manipulation"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-2">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation">
                       <Checkbox
                         id="has-time-entries"
                         checked={filters.has_time_entries || false}
                         onCheckedChange={(checked) => 
                           handleFilterChange('has_time_entries', checked || undefined)
                         }
+                        className="border-gray-300 dark:border-gray-600 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
                       />
-                      <label htmlFor="has-time-entries" className="text-sm cursor-pointer">
+                      <label htmlFor="has-time-entries" className="text-responsive-xs cursor-pointer flex-1 text-gray-700 dark:text-gray-300">
                         Has time entries
                       </label>
                     </div>
                     
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 touch-manipulation">
                       <Checkbox
                         id="active-timer"
                         checked={filters.active_timer || false}
                         onCheckedChange={(checked) => 
                           handleFilterChange('active_timer', checked || undefined)
                         }
+                        className="border-gray-300 dark:border-gray-600 data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
                       />
-                      <label htmlFor="active-timer" className="text-sm cursor-pointer">
+                      <label htmlFor="active-timer" className="text-responsive-xs cursor-pointer flex-1 text-gray-700 dark:text-gray-300">
                         Has active timer
                       </label>
                     </div>
@@ -381,13 +391,13 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </div>
               )}
 
-              {/* Tags Filter */}
+              {/* Enhanced Tags Filter */}
               {section.id === 'tags' && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Tags (comma-separated)</label>
+                <div className="space-y-3">
+                  <label className="text-responsive-xs font-medium text-gray-900 dark:text-gray-100">Tags (comma-separated)</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                    className="w-full mobile-padding sm:px-3 sm:py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-responsive-xs bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent touch-manipulation"
                     placeholder="Enter tags..."
                     value={filters.tags?.join(', ') || ''}
                     onChange={(e) => {
@@ -398,43 +408,43 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                 </div>
               )}
 
-              {/* Assignee Filter */}
+              {/* Enhanced Assignee Filter */}
               {section.id === 'assignee' && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Assignee</label>
+                <div className="space-y-3">
+                  <label className="text-responsive-xs font-medium text-gray-900 dark:text-gray-100">Assignee</label>
                   <Select
                     value={filters.assignee_id || ''}
                     onValueChange={(value) => 
                       handleFilterChange('assignee_id', value || undefined)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="btn-mobile bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 touch-manipulation">
                       <SelectValue placeholder="Select assignee..." />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="">All assignees</SelectItem>
-                      <SelectItem value="unassigned">Unassigned</SelectItem>
+                    <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                      <SelectItem value="" className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">All assignees</SelectItem>
+                      <SelectItem value="unassigned" className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">Unassigned</SelectItem>
                       {/* Add dynamic assignee options here */}
                     </SelectContent>
                   </Select>
                 </div>
               )}
 
-              {/* Project Filter */}
+              {/* Enhanced Project Filter */}
               {section.id === 'project' && (
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Project</label>
+                <div className="space-y-3">
+                  <label className="text-responsive-xs font-medium text-gray-900 dark:text-gray-100">Project</label>
                   <Select
                     value={filters.project_id || ''}
                     onValueChange={(value) => 
                       handleFilterChange('project_id', value || undefined)
                     }
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="btn-mobile bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 touch-manipulation">
                       <SelectValue placeholder="Select project..." />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="">All projects</SelectItem>
+                    <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                      <SelectItem value="" className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700">All projects</SelectItem>
                       {/* Add dynamic project options here */}
                     </SelectContent>
                   </Select>

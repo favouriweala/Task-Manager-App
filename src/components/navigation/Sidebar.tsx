@@ -8,10 +8,13 @@ import {
   Users, 
   FolderOpen, 
   CheckSquare, 
+  BarChart3,
   Settings,
-  LogOut
+  LogOut,
+  Bot
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 
 interface SidebarProps {
   className?: string;
@@ -38,16 +41,29 @@ const navigationItems = [
     href: '/tasks',
     icon: CheckSquare,
   },
+  {
+    name: 'Analytics',
+    href: '/analytics',
+    icon: BarChart3,
+  },
+  {
+    name: 'AI Agents',
+    href: '/ai-agents',
+    icon: Bot,
+  },
 ];
 
 export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className={cn("hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 h-full", className)}>
+    <div className={cn("hidden lg:flex flex-col w-64 bg-zyra-card border-r border-zyra-border h-full", className)}>
       {/* Logo */}
-      <div className="flex items-center px-6 py-4 border-b border-gray-200">
-        <h1 className="text-xl font-bold text-blue-600">Zyra</h1>
+      <div className="zyra-header px-6 py-5 border-0">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-white">✨ Zyra Task Manager</h1>
+          <NotificationCenter />
+        </div>
       </div>
 
       {/* Navigation */}

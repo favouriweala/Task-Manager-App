@@ -34,14 +34,14 @@ export function KanbanColumn({
   });
 
   return (
-    <div className="flex flex-col min-w-[280px] sm:min-w-[300px] max-w-[280px] sm:max-w-[300px]">
+    <div className="flex flex-col min-w-[260px] sm:min-w-[280px] lg:min-w-[300px] max-w-[260px] sm:max-w-[280px] lg:max-w-[300px]">
       <div className={cn(
-        "rounded-lg p-2 sm:p-3 mb-3 sm:mb-4",
+        "rounded-lg sm:rounded-xl p-3 sm:p-4 mb-3 sm:mb-4 shadow-mobile",
         color
       )}>
-        <h3 className="font-semibold text-gray-800 flex items-center justify-between text-sm sm:text-base">
+        <h3 className="font-semibold text-zyra-text-primary flex items-center justify-between text-sm sm:text-base">
           {label}
-          <span className="bg-white text-gray-600 text-xs px-2 py-1 rounded-full">
+          <span className="bg-zyra-card text-zyra-text-secondary text-xs px-2 py-1 rounded-full shadow-sm">
             {tasks.length}
           </span>
         </h3>
@@ -50,15 +50,17 @@ export function KanbanColumn({
       <div
         ref={setNodeRef}
         className={cn(
-          "flex-1 min-h-[200px] p-2 rounded-lg border-2 border-dashed transition-colors touch-manipulation",
-          isOver ? "border-blue-400 bg-blue-50" : "border-gray-200 bg-gray-50"
+          "flex-1 min-h-[200px] sm:min-h-[250px] p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 border-dashed transition-all duration-300 touch-manipulation",
+          isOver 
+            ? "border-zyra-primary bg-zyra-primary/10 shadow-mobile-lg" 
+            : "border-zyra-border bg-zyra-background hover:bg-zyra-background"
         )}
       >
         <SortableContext
           items={tasks.map((task) => task.id)}
           strategy={verticalListSortingStrategy}
         >
-          <div className="space-y-2 sm:space-y-3">
+          <div className="space-y-3 sm:space-y-4">
             {tasks.map((task) => (
               <DraggableTaskCard
                 key={task.id}
@@ -72,8 +74,11 @@ export function KanbanColumn({
         </SortableContext>
 
         {tasks.length === 0 && (
-          <div className="flex items-center justify-center h-32 text-gray-400 text-xs sm:text-sm">
-            Drop tasks here
+          <div className="flex items-center justify-center h-32 sm:h-40 text-zyra-text-secondary text-xs sm:text-sm">
+            <div className="text-center">
+              <div className="mb-2 opacity-50">📋</div>
+              <div>Drop tasks here</div>
+            </div>
           </div>
         )}
       </div>

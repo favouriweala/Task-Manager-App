@@ -88,25 +88,25 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8">
+      <div className="bg-zyra-background shadow-lg rounded-lg p-8 border border-zyra-border">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-3xl font-bold text-zyra-text-primary">
             Create Account
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-zyra-text-secondary mt-2">
             Join us to get started
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md text-sm">
+            <div className="bg-zyra-danger/10 border border-zyra-danger/20 text-zyra-danger px-4 py-3 rounded-md text-sm">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="fullName" className="block text-sm font-medium text-zyra-text-primary mb-2">
               Full Name
             </label>
             <input
@@ -115,7 +115,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               type="text"
               value={formData.fullName}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-zyra-border rounded-md shadow-sm placeholder-zyra-text-secondary/60 focus:outline-none focus:ring-2 focus:ring-zyra-primary focus:border-zyra-primary bg-zyra-background text-zyra-text-primary"
               placeholder="Enter your full name"
               required
               disabled={loading}
@@ -123,7 +123,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-zyra-text-primary mb-2">
               Email Address
             </label>
             <input
@@ -132,7 +132,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               type="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-zyra-border rounded-md shadow-sm placeholder-zyra-text-secondary/60 focus:outline-none focus:ring-2 focus:ring-zyra-primary focus:border-zyra-primary bg-zyra-background text-zyra-text-primary"
               placeholder="Enter your email"
               required
               disabled={loading}
@@ -140,7 +140,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="password" className="block text-sm font-medium text-zyra-text-primary mb-2">
               Password
             </label>
             <div className="relative">
@@ -150,7 +150,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white pr-10"
+                className="w-full px-3 py-2 border border-zyra-border rounded-md shadow-sm placeholder-zyra-text-secondary/60 focus:outline-none focus:ring-2 focus:ring-zyra-primary focus:border-zyra-primary bg-zyra-background text-zyra-text-primary pr-10"
                 placeholder="Create a password"
                 required
                 disabled={loading}
@@ -158,7 +158,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-zyra-text-secondary hover:text-zyra-text-primary"
                 disabled={loading}
               >
                 {showPassword ? (
@@ -174,7 +174,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               </button>
             </div>
             {passwordErrors.length > 0 && formData.password && (
-              <div className="mt-2 text-sm text-red-600 dark:text-red-400">
+              <div className="mt-2 text-sm text-zyra-danger">
                 <ul className="list-disc list-inside space-y-1">
                   {passwordErrors.map((error, index) => (
                     <li key={index}>{error}</li>
@@ -185,7 +185,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-zyra-text-primary mb-2">
               Confirm Password
             </label>
             <div className="relative">
@@ -195,7 +195,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white pr-10"
+                className="w-full px-3 py-2 border border-zyra-border rounded-md shadow-sm placeholder-zyra-text-secondary/60 focus:outline-none focus:ring-2 focus:ring-zyra-primary focus:border-zyra-primary bg-zyra-background text-zyra-text-primary pr-10"
                 placeholder="Confirm your password"
                 required
                 disabled={loading}
@@ -203,7 +203,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-zyra-text-secondary hover:text-zyra-text-primary"
                 disabled={loading}
               >
                 {showConfirmPassword ? (
@@ -219,7 +219,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               </button>
             </div>
             {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-              <p className="mt-2 text-sm text-red-600 dark:text-red-400">
+              <p className="mt-2 text-sm text-zyra-danger">
                 Passwords do not match
               </p>
             )}
@@ -230,16 +230,16 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
               id="terms"
               name="terms"
               type="checkbox"
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-zyra-primary focus:ring-zyra-primary border-zyra-border rounded"
               required
             />
-            <label htmlFor="terms" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+            <label htmlFor="terms" className="ml-2 block text-sm text-zyra-text-primary">
               I agree to the{' '}
-              <a href="/terms" className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="/terms" className="text-zyra-primary hover:text-zyra-primary/80">
                 Terms of Service
               </a>{' '}
               and{' '}
-              <a href="/privacy" className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              <a href="/privacy" className="text-zyra-primary hover:text-zyra-primary/80">
                 Privacy Policy
               </a>
             </label>
@@ -248,7 +248,7 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
           <button
             type="submit"
             disabled={loading || passwordErrors.length > 0}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed dark:bg-blue-500 dark:hover:bg-blue-600"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zyra-primary hover:bg-zyra-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zyra-primary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <div className="flex items-center">
@@ -265,12 +265,12 @@ export default function SignupForm({ onToggleMode }: SignupFormProps) {
 
           {onToggleMode && (
             <div className="text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-zyra-text-secondary">
                 Already have an account?{' '}
                 <button
                   type="button"
                   onClick={onToggleMode}
-                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                  className="font-medium text-zyra-primary hover:text-zyra-primary/80"
                 >
                   Sign in
                 </button>

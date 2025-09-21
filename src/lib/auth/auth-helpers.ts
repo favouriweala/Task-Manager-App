@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@supabase/supabase-js';
 // Remove server import to avoid next/headers error in client components
 // import { supabaseAdmin } from '@/lib/supabase/server'
 
@@ -29,6 +29,10 @@ export interface UpdatePasswordData {
 // Client-side auth helpers
 export const authHelpers = {
   async signUp({ email, password, fullName }: SignUpData) {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -49,6 +53,10 @@ export const authHelpers = {
   },
 
   async signIn({ email, password }: SignInData) {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -64,6 +72,10 @@ export const authHelpers = {
   },
 
   async signOut() {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
@@ -74,6 +86,10 @@ export const authHelpers = {
   },
 
   async resetPassword({ email }: ResetPasswordData) {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/reset-password`,
@@ -88,6 +104,10 @@ export const authHelpers = {
   },
 
   async updatePassword({ password }: UpdatePasswordData) {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { error } = await supabase.auth.updateUser({
         password,
@@ -102,6 +122,10 @@ export const authHelpers = {
   },
 
   async getCurrentUser() {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { data: { user }, error } = await supabase.auth.getUser()
       
@@ -114,6 +138,10 @@ export const authHelpers = {
   },
 
   async getCurrentSession() {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { data: { session }, error } = await supabase.auth.getSession()
       
@@ -126,6 +154,10 @@ export const authHelpers = {
   },
 
   async signInWithProvider(provider: 'google' | 'github' | 'discord') {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
