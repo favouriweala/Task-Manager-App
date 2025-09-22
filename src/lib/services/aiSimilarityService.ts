@@ -360,17 +360,23 @@ ${taskSummaries}
       const keywords = text.match(/\b\w{3,}\b/g) || [];
 
       // Calculate timeline
+     // Fix for line 365 - Add explicit type annotation for date parameter
+              // Calculate timeline
+      // Fix for line 365 - Add explicit type annotation for date parameter
       const taskDates = tasks
         .map((task: any) => new Date(task.created_at))
-        .filter(date => !isNaN(date.getTime()));
-      
+        .filter((date: Date) => !isNaN(date.getTime()));
+
       const dueDates = tasks
         .map((task: any) => task.due_date ? new Date(task.due_date) : null)
-        .filter(Boolean);
+        .filter((date: Date | null) => date && !isNaN(date.getTime())) as Date[];
 
       const timeline = {
-        startDate: taskDates.length > 0 ? new Date(Math.min(...taskDates.map(d => d.getTime()))) : undefined,
-        endDate: dueDates.length > 0 ? new Date(Math.max(...dueDates.map(d => d!.getTime()))) : undefined,
+        startDate: taskDates.length > 0 ? new Date(Math.min(...taskDates.map((d: Date) => d.getTime()))) : undefined,
+        endDate: dueDates.length > 0 ? new Date(Math.max(...dueDates.map((d: Date) => d.getTime()))) : undefined,
+        duration: taskDates.length > 0 && dueDates.length > 0 ? 
+          Math.max(...dueDates.map((d: Date) => d.getTime())) - Math.min(...taskDates.map((d: Date) => d.getTime())) : 
+          undefined
       };
 
       const analysis: ProjectAnalysis = {
@@ -385,13 +391,12 @@ ${taskSummaries}
         timeline,
       };
 
-      return { success: true, data: analysis };
+            return { success: true, data: analysis };
     } catch (error) {
       console.error('Error getting project analysis:', error);
       return { success: false, error: 'Failed to analyze project' };
     }
-  }
-
+  } 
   /**
    * Calculate text similarity using simple algorithm
    */

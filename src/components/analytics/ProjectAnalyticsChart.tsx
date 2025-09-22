@@ -311,14 +311,14 @@ export function ProjectAnalyticsChart({ data, timeRange, className }: ProjectAna
             <div className="space-y-4">
               <ResponsiveContainer width="100%" height={200}>
                 <PieChart>
-                  <Pie
+                                    <Pie            
                     data={statusDistribution}
                     cx="50%"
                     cy="50%"
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
+                    label={({ percent }: any) => `${(percent * 100).toFixed(0)}%`}
                   >
                     {statusDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />

@@ -109,16 +109,17 @@ class PredictiveAnalyticsService {
       if (tasksError) return null;
 
       const totalTasks = tasks.length;
-      const completedTasks = tasks.filter(t => t.status === 'completed').length;
-      const inProgressTasks = tasks.filter(t => t.status === 'in_progress').length;
-      const pendingTasks = tasks.filter(t => t.status === 'pending').length;
+      // Fix for lines 112-121 - Add explicit type annotations for filter parameters
+const completedTasks = tasks.filter((t: any) => t.status === 'completed').length;
+const inProgressTasks = tasks.filter((t: any) => t.status === 'in_progress').length;
+const pendingTasks = tasks.filter((t: any) => t.status === 'pending').length;
 
-      const completedTasksWithDuration = tasks.filter(t => 
-        t.status === 'completed' && t.started_at && t.completed_at
-      );
+const completedTasksWithDuration = tasks.filter((t: any) => 
+  t.status === 'completed' && t.started_at && t.completed_at
+);
 
       const averageTaskDuration = completedTasksWithDuration.length > 0
-        ? completedTasksWithDuration.reduce((sum, task) => {
+        ? completedTasksWithDuration.reduce((sum: number, task: any) => {
             const duration = new Date(task.completed_at).getTime() - new Date(task.started_at).getTime();
             return sum + duration;
           }, 0) / completedTasksWithDuration.length / (1000 * 60 * 60) // Convert to hours
@@ -266,8 +267,10 @@ class PredictiveAnalyticsService {
       const peakHours = this.findPeakProductivityHours(tasks);
 
       // Use AI to generate personalized suggestions
+      // Fix for line 279 - Add explicit type annotation for userId parameter
       const suggestions = await geminiClient.generatePersonalizedRecommendations({
-        id: userId,
+        id: userId as string,
+
         workPatterns: [],
         preferences: {},
         recentTasks: []
@@ -320,14 +323,16 @@ class PredictiveAnalyticsService {
 
       // Use AI to analyze optimal resource allocation
       const aiAnalysis = await geminiClient.analyzeWorkflowPatterns(
-        assignments?.map(assignment => ({
-          action: `task_assignment_${assignment.status}`,
-          timestamp: new Date().toISOString(),
-          context: {
-            assignee_id: assignment.assignee_id,
-            estimated_hours: assignment.estimated_hours,
-            complexity: assignment.complexity
-          }
+        // Fix for line 323 - Add explicit type annotation for assignment parameter
+    assignments?.map((assignment: any) => ({
+      action: `task_assignment_${assignment.status}`,
+      timestamp: new Date().toISOString(),
+      context: {
+        assignee_id: assignment.assignee_id,
+        estimated_hours: assignment.estimated_hours,
+        complexity: assignment.complexity
+      }
+
         })) || []
       );
 
@@ -399,7 +404,8 @@ class PredictiveAnalyticsService {
   private findPeakProductivityHours(tasks: any[]): number[] {
     const hourCounts = new Array(24).fill(0);
     
-    tasks.forEach(task => {
+    // Fix for line 403 - Add explicit type annotation for task parameter
+    tasks.forEach((task: any) => {
       if (task.completed_at) {
         const hour = new Date(task.completed_at).getHours();
         hourCounts[hour]++;

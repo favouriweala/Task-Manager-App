@@ -111,9 +111,9 @@ class RealTimeProcessorService {
     return requestId;
   }
 
-  async processRequest(request: RealTimeProcessingRequest): Promise<RealTimeProcessingResult> {
-    return new Promise((resolve, reject) => {
-      const requestId = this.queueProcessingRequest(request);
+    async processRequest(request: RealTimeProcessingRequest): Promise<RealTimeProcessingResult> {
+    return new Promise(async (resolve, reject) => {
+      const requestId = await this.queueProcessingRequest(request);
       
       // Set up callback for when processing completes
       this.processingCallbacks.set(requestId, (result: RealTimeProcessingResult) => {
@@ -133,7 +133,6 @@ class RealTimeProcessorService {
       }, 30000); // 30 second timeout
     });
   }
-
   async batchProcessRequests(requests: RealTimeProcessingRequest[]): Promise<RealTimeProcessingResult[]> {
     const promises = requests.map(request => this.processRequest(request));
     

@@ -406,8 +406,8 @@ class AIAgentService {
         return { success: false, error: 'Projects not found or access denied' };
       }
 
-      const primaryProject = projects.find(p => p.id === primaryProjectId);
-      const secondaryProject = projects.find(p => p.id === secondaryProjectId);
+            const primaryProject = projects.find((p: any) => p.id === primaryProjectId);
+      const secondaryProject = projects.find((p: any) => p.id === secondaryProjectId);
 
       if (!primaryProject || !secondaryProject) {
         return { success: false, error: 'Invalid project configuration' };

@@ -1,5 +1,8 @@
+// @ts-ignore - Deno runtime import
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+// @ts-ignore - Deno runtime import  
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+// @ts-ignore - Deno runtime import
 import { GoogleGenerativeAI } from 'https://esm.sh/@google/generative-ai@0.1.3'
 
 const corsHeaders = {
@@ -23,7 +26,7 @@ interface AIProcessingResponse {
   requestId: string;
 }
 
-serve(async (req) => {
+serve(async (req: Request) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -32,7 +35,9 @@ serve(async (req) => {
   try {
     // Initialize Supabase client
     const supabaseClient = createClient(
+      // @ts-ignore - Deno global
       Deno.env.get('SUPABASE_URL') ?? '',
+      // @ts-ignore - Deno global  
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
@@ -42,6 +47,7 @@ serve(async (req) => {
     )
 
     // Initialize Gemini AI
+    // @ts-ignore - Deno global
     const apiKey = Deno.env.get('GEMINI_API_KEY');
     if (!apiKey) {
       throw new Error('GEMINI_API_KEY environment variable is not set');
