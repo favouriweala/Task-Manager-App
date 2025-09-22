@@ -632,4 +632,5 @@ Provide a JSON response with:
 }
 
 export const aiAgentService = new AIAgentService();
+export { AIAgentService };
 export type { AIAgent, AIAgentAction, MergeSuggestion };
