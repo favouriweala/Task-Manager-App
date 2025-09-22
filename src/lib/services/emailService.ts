@@ -220,13 +220,19 @@ Task Manager - Stay organized, stay productive
         subject = this.processTemplate(template.subject, data);
       }
 
-      const result = await this.resend.emails.send({
+      const emailOptions: any = {
         from: process.env.EMAIL_FROM || 'Task Manager <noreply@taskmanager.com>',
         to: params.to,
         subject,
         html,
-        text,
-      });
+      };
+
+      // Only include text if it has a value
+      if (text) {
+        emailOptions.text = text;
+      }
+
+      const result = await this.resend.emails.send(emailOptions);
 
       if (result.error) {
         console.error('Resend error:', result.error);
