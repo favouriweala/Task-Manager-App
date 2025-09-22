@@ -1,35 +1,40 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
-import { ArrowRight, Sparkles, Shield, Zap, Users, BarChart3, Brain } from 'lucide-react'
+import { 
+  ArrowRight, Sparkles, Shield, Zap, Users, BarChart3, Brain, 
+  Code, Database, Cloud, Cpu, GitBranch, Smartphone, Globe,
+  CheckCircle, Star, TrendingUp, Clock, Target, Workflow,
+  MessageSquare, FileText, Calendar, Settings, Lock, Award
+} from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Zyra - AI-Native Task Management',
-  description: 'Enterprise-grade task management powered by Google AI. Streamline workflows, boost productivity, and collaborate seamlessly.',
+  title: 'Zyra - AI-Native Task Management Platform',
+  description: 'Enterprise-grade task management powered by Google Gemini AI. Intelligent automation, real-time collaboration, and predictive analytics for modern teams.',
 }
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-zyra-background dark:bg-zyra-dark-background">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-zyra-card/80 dark:bg-zyra-dark-card/80 backdrop-blur-md border-b border-zyra-border dark:border-zyra-dark-border z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 z-50">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-zyra-primary to-zyra-secondary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 rounded-lg flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-zyra-text-primary dark:text-zyra-dark-text-primary">Zyra</span>
+              <span className="text-xl font-bold text-gray-900 dark:text-white">Zyra</span>
             </div>
             <div className="flex items-center space-x-4">
               <Link 
                 href="/auth/login"
-                className="text-zyra-text-secondary dark:text-zyra-dark-text-secondary hover:text-zyra-text-primary dark:hover:text-zyra-dark-text-primary transition-colors"
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 Sign In
               </Link>
               <Link 
                 href="/auth/signup"
-                className="bg-zyra-primary hover:bg-zyra-primary/90 text-white px-4 py-2 rounded-full font-medium transition-all duration-200 hover:shadow-lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full font-medium transition-all duration-200 hover:shadow-lg"
               >
                 Get Started
               </Link>
@@ -39,44 +44,44 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <section className="pt-32 pb-24">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-zyra-primary/10 dark:bg-zyra-primary/20 text-zyra-primary dark:text-zyra-primary text-sm font-medium mb-8">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-sm font-medium mb-8">
               <Sparkles className="w-4 h-4 mr-2" />
               Powered by Google Gemini AI
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-bold text-zyra-text-primary dark:text-zyra-dark-text-primary mb-6 leading-tight">
+            <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
               Task management
-              <span className="block bg-gradient-to-r from-zyra-primary via-zyra-secondary to-zyra-accent bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 reimagined with AI
               </span>
             </h1>
             
-            <p className="text-xl text-zyra-text-secondary dark:text-zyra-dark-text-secondary mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
               Zyra combines intelligent automation, real-time collaboration, and enterprise-grade security 
               to transform how teams manage work. Experience the future of productivity.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-20">
               <Link 
                 href="/auth/signup"
-                className="group bg-zyra-primary hover:bg-zyra-primary/90 text-white font-semibold py-4 px-8 rounded-full transition-all duration-200 hover:shadow-xl hover:scale-105 flex items-center justify-center"
+                className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 px-8 rounded-full transition-all duration-200 hover:shadow-xl hover:scale-105 flex items-center justify-center"
               >
                 Start Free Trial
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link 
                 href="#demo"
-                className="bg-zyra-surface hover:bg-zyra-surface/80 dark:bg-zyra-dark-surface dark:hover:bg-zyra-dark-surface/80 text-zyra-text-primary dark:text-zyra-dark-text-primary font-semibold py-4 px-8 rounded-full transition-all duration-200 hover:shadow-lg border border-zyra-border dark:border-zyra-dark-border"
+                className="bg-white hover:bg-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold py-4 px-8 rounded-full transition-all duration-200 hover:shadow-lg border border-gray-200 dark:border-gray-700"
               >
                 Watch Demo
               </Link>
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex flex-wrap justify-center items-center gap-12 text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center">
                 <Shield className="w-4 h-4 mr-2" />
                 SOC 2 Compliant
@@ -95,22 +100,22 @@ export default function HomePage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+      <section className="py-24 bg-white dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Everything you need to succeed
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
               From AI-powered insights to enterprise security, Zyra provides all the tools 
               your team needs to work smarter, not harder.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {/* AI Intelligence */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-10 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Brain className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -123,8 +128,8 @@ export default function HomePage() {
             </div>
 
             {/* Real-time Collaboration */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-10 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -137,8 +142,8 @@ export default function HomePage() {
             </div>
 
             {/* Advanced Analytics */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-10 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <BarChart3 className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -151,8 +156,8 @@ export default function HomePage() {
             </div>
 
             {/* Enterprise Security */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-10 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Shield className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -165,8 +170,8 @@ export default function HomePage() {
             </div>
 
             {/* Lightning Fast */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-10 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
@@ -179,8 +184,8 @@ export default function HomePage() {
             </div>
 
             {/* Seamless Integrations */}
-            <div className="group bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
-              <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center mb-6">
+            <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-6">
                 <Sparkles className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">

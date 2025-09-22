@@ -175,13 +175,25 @@ export function TeamCollaborationDashboard() {
             </div>
             
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-              <Button className="btn-mobile bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30 shadow-mobile touch-manipulation">
+              <Button 
+                className="btn-mobile bg-white/20 backdrop-blur-sm text-white border-white/30 hover:bg-white/30 shadow-mobile touch-manipulation transition-all duration-200"
+                onClick={() => {
+                  // Add meeting functionality here
+                  console.log('Start Meeting clicked');
+                }}
+              >
                 <Video className="w-4 h-4 mr-2" />
-                <span className="text-responsive-sm">Start Meeting</span>
+                <span className="text-sm font-medium">Start Meeting</span>
               </Button>
-              <Button className="btn-mobile bg-white text-blue-600 hover:bg-blue-50 shadow-mobile touch-manipulation">
+              <Button 
+                className="btn-mobile bg-white text-blue-600 hover:bg-blue-50 shadow-mobile touch-manipulation transition-all duration-200"
+                onClick={() => {
+                  // Add invite functionality here
+                  console.log('Invite Members clicked');
+                }}
+              >
                 <UserPlus className="w-4 h-4 mr-2" />
-                <span className="text-responsive-sm">Invite Members</span>
+                <span className="text-sm font-medium">Invite Members</span>
               </Button>
             </div>
           </div>
@@ -256,21 +268,21 @@ export function TeamCollaborationDashboard() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 sm:space-y-6">
           <div className="flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 bg-white dark:bg-gray-900 rounded-xl sm:rounded-2xl mobile-padding sm:p-6 shadow-mobile border border-gray-100 dark:border-gray-800">
             <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:grid-cols-4 bg-gray-50 dark:bg-gray-800 p-1 rounded-lg sm:rounded-xl">
-              <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-xs sm:text-sm touch-manipulation">
-                <BarChart3 className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="text-responsive-xs">Overview</span>
+              <TabsTrigger value="overview" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-sm sm:text-base touch-manipulation">
+                <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="text-sm sm:text-base font-medium">Overview</span>
               </TabsTrigger>
-              <TabsTrigger value="projects" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-xs sm:text-sm touch-manipulation">
-                <FileText className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="text-responsive-xs">Projects</span>
+              <TabsTrigger value="projects" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-sm sm:text-base touch-manipulation">
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="text-sm sm:text-base font-medium">Projects</span>
               </TabsTrigger>
-              <TabsTrigger value="members" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-xs sm:text-sm touch-manipulation">
-                <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="text-responsive-xs">Members</span>
+              <TabsTrigger value="members" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-sm sm:text-base touch-manipulation">
+                <Users className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="text-sm sm:text-base font-medium">Members</span>
               </TabsTrigger>
-              <TabsTrigger value="activity" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-xs sm:text-sm touch-manipulation">
-                <Activity className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
-                <span className="text-responsive-xs">Activity</span>
+              <TabsTrigger value="activity" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm rounded-md sm:rounded-lg text-sm sm:text-base touch-manipulation">
+                <Activity className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
+                <span className="text-sm sm:text-base font-medium">Activities</span>
               </TabsTrigger>
             </TabsList>
 
@@ -284,9 +296,17 @@ export function TeamCollaborationDashboard() {
                   className="pl-10 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 text-sm touch-manipulation"
                 />
               </div>
-              <Button variant="outline" size="sm" className="btn-mobile shadow-mobile touch-manipulation">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="btn-mobile shadow-mobile touch-manipulation hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                onClick={() => {
+                  // Add filter functionality here
+                  console.log('Filter button clicked');
+                }}
+              >
                 <Filter className="w-4 h-4 mr-2" />
-                <span className="text-responsive-sm">Filter</span>
+                <span className="text-sm font-medium">Filters</span>
               </Button>
             </div>
           </div>

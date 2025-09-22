@@ -49,9 +49,9 @@ const sortOptions = [
   { value: 'status', label: 'Status' },
 ];
 
-export function TaskDashboard() {
+export default function TaskDashboard() {
   const [showTaskForm, setShowTaskForm] = useState(false);
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
   const [activeTab, setActiveTab] = useState('all');
   const [showFilterPanel, setShowFilterPanel] = useState(false);
 
@@ -86,24 +86,22 @@ export function TaskDashboard() {
   };
 
   // Handle task operations
-  const handleCreateTask = async (taskData: TaskFormData) => {
-    try {
-      await createTask(taskData);
-      setShowTaskForm(false);
-    } catch (error) {
-      console.error('Error creating task:', error);
-    }
-  };
-
-  const handleUpdateTask = async (taskData: TaskFormData) => {
-    if (!editingTask) return;
-    
-    try {
-      await updateTask(editingTask.id, taskData);
-      setShowTaskForm(false);
-      setEditingTask(null);
-    } catch (error) {
-      console.error('Error updating task:', error);
+  const handleTaskSubmit = async (taskData: TaskFormData) => {
+    if (editingTask) {
+      try {
+        await updateTask(editingTask.id, taskData);
+        setShowTaskForm(false);
+        setEditingTask(undefined);
+      } catch (error) {
+        console.error('Error updating task:', error);
+      }
+    } else {
+      try {
+        await createTask(taskData);
+        setShowTaskForm(false);
+      } catch (error) {
+        console.error('Error creating task:', error);
+      }
     }
   };
 
@@ -215,7 +213,6 @@ export function TaskDashboard() {
               <FilterPanel
                 filters={filters}
                 onFiltersChange={handleFiltersChange}
-                onClearFilters={clearFilters}
               />
             </div>
           </div>
@@ -432,18 +429,15 @@ export function TaskDashboard() {
 
       {/* Task Form Modal with mobile-first responsive design */}
       {showTaskForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center mobile-padding sm:p-4 z-50 safe-top safe-bottom">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl mobile-padding sm:p-6 w-full max-w-md mx-4 shadow-mobile-lg">
-            <TaskForm
-              task={editingTask}
-              onSubmit={handleTaskSubmit}
-              onCancel={() => {
-                setShowTaskForm(false);
-                setEditingTask(null);
-              }}
-            />
-          </div>
-        </div>
+        <TaskForm
+          task={editingTask}
+          onSubmit={handleTaskSubmit}
+          onCancel={() => {
+            setShowTaskForm(false);
+            setEditingTask(undefined);
+          }}
+          isOpen={showTaskForm}
+        />
       )}
     </div>
   );
