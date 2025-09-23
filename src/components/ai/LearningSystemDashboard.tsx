@@ -51,7 +51,7 @@ export default function LearningSystemDashboard({ className }: LearningSystemDas
     if (user?.id) {
       loadLearningData();
     }
-  }, [user?.id]);
+  }, [user?.id, loadLearningData]);
 
   const loadLearningData = async () => {
     if (!user?.id) return;

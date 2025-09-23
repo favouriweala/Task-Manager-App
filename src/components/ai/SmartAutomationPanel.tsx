@@ -21,8 +21,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   BarChart3,
-  Users,
-  Calendar,
   RefreshCw
 } from 'lucide-react';
 
@@ -396,7 +394,7 @@ export function SmartAutomationPanel({ className }: SmartAutomationPanelProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white">AI-Generated Insights</h3>
-                  <p className="text-gray-600 dark:text-gray-400">Intelligent analysis of your team's productivity patterns</p>
+                  <p className="text-gray-600 dark:text-gray-400">Intelligent analysis of your team&apos;s productivity patterns</p>
                 </div>
                 <Badge variant="outline">
                   {aiInsights.filter(insight => insight.actionable).length} actionable insights

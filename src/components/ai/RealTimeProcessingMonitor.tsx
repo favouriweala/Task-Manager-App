@@ -62,7 +62,7 @@ export default function RealTimeProcessingMonitor({ className }: RealTimeProcess
         clearInterval(interval);
       }
     };
-  }, [isMonitoring]);
+  }, [isMonitoring, updateQueueStatus]);
 
   const updateQueueStatus = () => {
     try {

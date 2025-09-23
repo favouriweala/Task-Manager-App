@@ -35,7 +35,7 @@ export function PredictiveAnalytics({ projectId, userId }: PredictiveAnalyticsPr
 
   useEffect(() => {
     loadAnalytics();
-  }, [projectId, userId]);
+  }, [projectId, userId, loadAnalytics]);
 
   const loadAnalytics = async () => {
     try {

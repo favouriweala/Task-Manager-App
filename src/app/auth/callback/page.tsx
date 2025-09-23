@@ -18,7 +18,7 @@ export default function AuthCallbackPage() {
         // Check for auth tokens in hash or search params
         const accessToken = hashParams.get('access_token') || urlParams.get('access_token')
         const refreshToken = hashParams.get('refresh_token') || urlParams.get('refresh_token')
-        const tokenType = hashParams.get('token_type') || urlParams.get('token_type')
+        const _tokenType = hashParams.get('token_type') || urlParams.get('token_type')
         
         if (accessToken && refreshToken) {
           // Exchange tokens for session

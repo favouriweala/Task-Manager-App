@@ -78,7 +78,7 @@ export function AIAgentDashboard() {
     fetchAgents();
     fetchActions();
     fetchMetrics();
-  }, []);
+  }, [fetchAgents, fetchActions, fetchMetrics]);
 
   const fetchAgents = async () => {
     try {

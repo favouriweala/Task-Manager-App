@@ -3,7 +3,7 @@ import { Task, TaskFormData, TaskPriority, TaskStatus } from '../types/task';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Sparkles, Loader2 } from 'lucide-react';
 import { useAI } from '../hooks/useAI';
 

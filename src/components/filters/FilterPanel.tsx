@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Checkbox } from '../ui/checkbox';
 import { Slider } from '../ui/slider';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { DatePickerWithRange } from '../ui/date-range-picker';
 import { TaskFilters, TaskStatus, TaskPriority, TaskSortOptions } from '../../types/task';

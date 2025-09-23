@@ -8,7 +8,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
@@ -47,7 +47,7 @@ export function SmartNotificationCenter({ userId = 'current-user' }: SmartNotifi
 
   useEffect(() => {
     loadData();
-  }, [userId]);
+  }, [userId, loadData]);
 
   const loadData = async () => {
     try {
