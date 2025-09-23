@@ -5,7 +5,7 @@ export interface AuthError {
   status?: number
 }
 
-// Server-side auth helpers (only for API routes and server components)
+// Server-side a auth helpers (only for API routes and server components)
 export const serverAuthHelpers = {
   async createUser(email: string, password: string, metadata?: Record<string, any>) {
     try {
