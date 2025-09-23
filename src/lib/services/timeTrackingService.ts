@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { TimeEntry, WorkSession, TimeReport, TimeTrackingSettings, TimeTrackingSummary, TimerState } from '../../types/task';
+import { TimeEntry, TimeReport, TimeTrackingSettings, TimeTrackingSummary } from '../../types/task';
 
 export class TimeTrackingService {
   // Time Entry Management

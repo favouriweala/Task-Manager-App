@@ -1,6 +1,6 @@
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
-import { Database, EmailQueue, InsertEmailQueue, UpdateEmailQueue } from '../database/types';
+import { EmailQueue, InsertEmailQueue, UpdateEmailQueue } from '../database/types';
 
 interface EmailTemplate {
   id: string;
