@@ -466,13 +466,25 @@ class AIAgentService {
           result = await this.analyzeWorkflowPatterns(request.userId);
           break;
         case 'priority_prediction':
-          result = await this.predictTaskPriority(request.data);
+          result = await this.predictTaskPriority({
+            title: request.data.title || '',
+            description: request.data.description || '',
+            dueDate: request.data.dueDate,
+            projectId: request.data.projectId,
+            userId: request.data.userId || request.userId
+          });
           break;
         case 'completion_forecast':
-          result = await this.forecastProjectCompletion(request.data.projectId, request.userId);
+          result = await this.forecastProjectCompletion(request.data.projectId, request.data.userId || request.userId);
           break;
         case 'notification_analysis':
-          result = await this.analyzeNotificationContext(request.data);
+          result = await this.analyzeNotificationContext({
+            type: request.data.type || '',
+            title: request.data.title || '',
+            message: request.data.message || '',
+            priority: request.data.priority || 'medium',
+            userId: request.data.userId || request.userId
+          });
           break;
         case 'recommendation_generation':
           result = await this.generatePersonalizedRecommendations(request.userId);

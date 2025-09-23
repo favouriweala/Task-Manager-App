@@ -11,6 +11,7 @@ type NotificationType =
   | 'task_completed' 
   | 'task_due_soon' 
   | 'task_overdue'
+  | 'task_updated'
   | 'comment_added' 
   | 'project_invitation' 
   | 'project_update'
@@ -29,6 +30,8 @@ interface CreateNotificationData {
   metadata?: Record<string, any>;
   actionUrl?: string;
   sendEmail?: boolean;
+  relatedTaskId?: string;
+  relatedProjectId?: string;
 }
 
 interface NotificationPreferences {

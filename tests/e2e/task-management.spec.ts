@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Task Management E2E Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    // Navigate to the dashboard page where the task management functionality is located
+    await page.goto('/dashboard');
     // Wait for the app to load
     await page.waitForLoadState('networkidle');
   });

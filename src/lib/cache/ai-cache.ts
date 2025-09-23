@@ -1,4 +1,4 @@
-import LRU from 'lru-cache';
+import { LRUCache } from 'lru-cache';
 import { createHash } from 'crypto';
 
 interface CacheEntry {
@@ -14,12 +14,12 @@ interface CacheOptions {
 }
 
 export class AIResponseCache {
-  private cache: LRU<string, CacheEntry>;
+  private cache: LRUCache<string, CacheEntry>;
   private defaultTTL: number;
   private enableCompression: boolean;
 
   constructor(options: CacheOptions = {}) {
-    this.cache = new LRU({
+    this.cache = new LRUCache({
       max: options.maxSize || 1000,
       maxSize: 50 * 1024 * 1024, // 50MB max cache size
       sizeCalculation: (value: CacheEntry) => {

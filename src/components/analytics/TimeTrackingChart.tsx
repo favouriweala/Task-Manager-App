@@ -31,6 +31,7 @@ interface ProjectTimeData {
   project: string;
   time: number;
   color: string;
+  [key: string]: any; // Add index signature for Recharts compatibility
 }
 
 interface TimeTrackingChartProps {
@@ -270,7 +271,7 @@ export function TimeTrackingChart({ data, timeRange, className }: TimeTrackingCh
                     outerRadius={80}
                     fill="#8884d8"
                     dataKey="time"
-                    label={({ name, percent }) => `${(percent * 100).toFixed(0)}%`}
+                    label={(props: any) => `${(props.percent * 100).toFixed(0)}%`}
                   >
                     {projectData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />

@@ -406,7 +406,8 @@ class PatternRecognitionService {
       if (!timeGroups.has(key)) {
         timeGroups.set(key, 0);
       }
-      timeGroups.get(key)++;
+      const currentCount = timeGroups.get(key) || 0;
+      timeGroups.set(key, currentCount + 1);
     });
 
     const patterns = [];

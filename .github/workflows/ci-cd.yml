@@ -105,14 +105,14 @@ jobs:
       run: npm ci
       
     - name: Validate AI models
-      run: npm run ai:validate
+      run: npm run validate-ai-models
       env:
-        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
         
     - name: Test AI response quality
-      run: npm run ai:test-quality
+      run: npm run test:ai
       env:
-        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
 
   e2e-tests:
     name: End-to-End Tests
@@ -304,12 +304,12 @@ jobs:
       run: npm ci
       
     - name: Monitor AI model performance
-      run: npm run ai:monitor
+      run: npm run test:ai
       env:
-        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         
     - name: Update AI model metrics
-      run: npm run ai:update-metrics
+      run: npm run validate-ai-models
       env:
-        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
+        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}

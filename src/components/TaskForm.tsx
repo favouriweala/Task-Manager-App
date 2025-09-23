@@ -143,6 +143,7 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
               onChange={(e) => handleChange('title', e.target.value)}
               placeholder="Enter task title"
               required
+              data-testid="task-title-input"
             />
             {aiSuggestions?.suggestedTitle && aiSuggestions.suggestedTitle !== formData.title && (
               <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
@@ -172,6 +173,7 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
               onChange={(e) => handleChange('description', e.target.value)}
               placeholder="Enter task description"
               rows={3}
+              data-testid="task-description-input"
             />
             {aiSuggestions?.suggestedDescription && aiSuggestions.suggestedDescription !== formData.description && (
               <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
@@ -229,12 +231,12 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
                 Status
               </label>
               <Select value={formData.status} onValueChange={(value: string) => handleChange('status', value as TaskStatus)}>
-                <SelectTrigger>
+                <SelectTrigger data-testid="task-status-select">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="todo">To Do</SelectItem>
-                  <SelectItem value="in_progress">In Progress</SelectItem>
+                  <SelectItem value="in_progress" data-testid="status-in-progress">In Progress</SelectItem>
                   <SelectItem value="review">Review</SelectItem>
                   <SelectItem value="done">Done</SelectItem>
                 </SelectContent>
@@ -287,7 +289,7 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
             >
               Cancel
             </Button>
-            <Button type="submit">
+            <Button type="submit" data-testid="submit-task-button">
               {task ? 'Update Task' : 'Create Task'}
             </Button>
           </div>

@@ -191,6 +191,7 @@ export default function TaskDashboard() {
             <Button 
               onClick={() => setShowTaskForm(true)} 
               className="btn-mobile flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 shadow-mobile hover:shadow-mobile-lg transition-all duration-200 touch-manipulation"
+              data-testid="create-task-button"
             >
               <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
               <span className="text-responsive-sm">New Task</span>

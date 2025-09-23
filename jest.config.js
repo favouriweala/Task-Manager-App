@@ -5,7 +5,7 @@ const createJestConfig = nextJest({
 });
 
 const customJestConfig = {
-  setupFilesAfterEnv: ['<rootDir>/setup.ts'],
+  setupFilesAfterEnv: ['@testing-library/jest-dom'],
   testEnvironment: 'jest-environment-jsdom',
   setupFiles: ['<rootDir>/jest.setup.env.js'],
   collectCoverageFrom: [
@@ -31,6 +31,9 @@ const customJestConfig = {
   testMatch: [
     '<rootDir>/tests/**/*.test.{js,jsx,ts,tsx}',
     '<rootDir>/src/**/*.test.{js,jsx,ts,tsx}',
+  ],
+  transformIgnorePatterns: [
+    'node_modules/(?!(msw)/)',
   ],
 };
 
