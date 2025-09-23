@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -33,11 +33,7 @@ export function PredictiveAnalytics({ projectId, userId }: PredictiveAnalyticsPr
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadAnalytics();
-  }, [projectId, userId, loadAnalytics]);
-
-  const loadAnalytics = async () => {
+  const loadAnalytics = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -70,7 +66,11 @@ export function PredictiveAnalytics({ projectId, userId }: PredictiveAnalyticsPr
     } finally {
       setLoading(false);
     }
-  };
+  }, [projectId, userId]);
+
+  useEffect(() => {
+    loadAnalytics();
+  }, [projectId, userId, loadAnalytics]);
 
   const getConfidenceColor = (confidence: number) => {
     if (confidence >= 0.8) return 'text-green-600';

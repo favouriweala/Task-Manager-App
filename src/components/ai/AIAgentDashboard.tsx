@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Bot, 
   Brain, 
@@ -74,13 +74,7 @@ export function AIAgentDashboard() {
   const [runningAnalysis, setRunningAnalysis] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
-  useEffect(() => {
-    fetchAgents();
-    fetchActions();
-    fetchMetrics();
-  }, [fetchAgents, fetchActions, fetchMetrics]);
-
-  const fetchAgents = async () => {
+  const fetchAgents = useCallback(async () => {
     try {
       const response = await fetch('/api/ai-agents');
       if (response.ok) {
@@ -90,9 +84,9 @@ export function AIAgentDashboard() {
     } catch (error) {
       console.error('Error fetching agents:', error);
     }
-  };
+  }, []);
 
-  const fetchActions = async () => {
+  const fetchActions = useCallback(async () => {
     try {
       const response = await fetch('/api/ai-agents?action=actions&limit=20');
       if (response.ok) {
@@ -102,9 +96,9 @@ export function AIAgentDashboard() {
     } catch (error) {
       console.error('Error fetching actions:', error);
     }
-  };
+  }, []);
 
-  const fetchMetrics = async () => {
+  const fetchMetrics = useCallback(async () => {
     try {
       const response = await fetch('/api/ai-agents?action=metrics');
       if (response.ok) {
@@ -114,7 +108,13 @@ export function AIAgentDashboard() {
     } catch (error) {
       console.error('Error fetching metrics:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAgents();
+    fetchActions();
+    fetchMetrics();
+  }, [fetchAgents, fetchActions, fetchMetrics]);
 
   const runSimilarityAnalysis = async () => {
     setRunningAnalysis(true);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -45,11 +45,7 @@ export function SmartNotificationCenter({ userId = 'current-user' }: SmartNotifi
   const [editingRule, setEditingRule] = useState<NotificationRule | null>(null);
   const [showNewRule, setShowNewRule] = useState(false);
 
-  useEffect(() => {
-    loadData();
-  }, [userId, loadData]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -69,7 +65,11 @@ export function SmartNotificationCenter({ userId = 'current-user' }: SmartNotifi
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    loadData();
+  }, [userId, loadData]);
 
   const updatePreferences = async (newPreferences: UserPreferences) => {
     try {
