@@ -1,7 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GeminiAIClient } from '../ai/gemini-client';
-import { Database } from '../database/types';
 
 interface ProjectSimilarity {
   projectAId: string;

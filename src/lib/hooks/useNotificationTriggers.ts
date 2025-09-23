@@ -82,7 +82,7 @@ export function useNotificationTriggers() {
       projectSubscription.unsubscribe();
       clearInterval(dueDateInterval);
     };
-  }, []);
+  }, [supabase]);
 
   const handleTaskChange = async (payload: any) => {
     const { eventType, new: newRecord, old: oldRecord } = payload;

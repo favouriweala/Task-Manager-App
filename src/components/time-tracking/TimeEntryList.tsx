@@ -124,7 +124,7 @@ export const TimeEntryList: React.FC<TimeEntryListProps> = ({
         <CardHeader className="mobile-padding sm:p-6">
           <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
             <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
-            <span className="text-responsive-base font-semibold">📊 Today's Summary</span>
+            <span className="text-responsive-base font-semibold">📊 Today&apos;s Summary</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="mobile-padding sm:p-6 pt-0">

@@ -70,7 +70,7 @@ export class ErrorBoundary extends Sentry.ErrorBoundary {
             <div className="mt-4 text-center">
               <h3 className="text-lg font-medium text-gray-900">Something went wrong</h3>
               <p className="mt-2 text-sm text-gray-500">
-                We've been notified about this error and will fix it soon.
+                We&apos;ve been notified about this error and will fix it soon.
               </p>
               <div className="mt-4">
                 <button
