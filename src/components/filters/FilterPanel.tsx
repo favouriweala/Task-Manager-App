@@ -186,7 +186,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
             <div className="flex flex-col sm:flex-row gap-2">
               <Select
                 value={currentSort?.field || 'created_at'}
-                onValueChange={(value) => onSortChange({
+                onValueChange={(value: string) => onSortChange({
                   field: value as any,
                   direction: currentSort?.direction || 'desc'
                 })}
@@ -414,7 +414,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   <label className="text-responsive-xs font-medium text-gray-900 dark:text-gray-100">Assignee</label>
                   <Select
                     value={filters.assignee_id || ''}
-                    onValueChange={(value) => 
+                    onValueChange={(value: string) => 
                       handleFilterChange('assignee_id', value || undefined)
                     }
                   >
@@ -436,7 +436,7 @@ export const FilterPanel: React.FC<FilterPanelProps> = ({
                   <label className="text-responsive-xs font-medium text-gray-900 dark:text-gray-100">Project</label>
                   <Select
                     value={filters.project_id || ''}
-                    onValueChange={(value) => 
+                    onValueChange={(value: string) => 
                       handleFilterChange('project_id', value || undefined)
                     }
                   >

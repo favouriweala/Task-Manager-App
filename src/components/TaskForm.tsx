@@ -3,7 +3,7 @@ import { Task, TaskFormData, TaskPriority, TaskStatus } from '../types/task';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
 import { X, Sparkles, Loader2 } from 'lucide-react';
 import { useAI } from '../hooks/useAI';
 
@@ -211,7 +211,7 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
                   </Button>
                 )}
               </div>
-              <Select value={formData.priority} onValueChange={(value) => handleChange('priority', value as TaskPriority)}>
+              <Select value={formData.priority} onValueChange={(value: string) => handleChange('priority', value as TaskPriority)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
@@ -228,7 +228,7 @@ export function TaskForm({ task, onSubmit, onCancel, isOpen }: TaskFormProps) {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Status
               </label>
-              <Select value={formData.status} onValueChange={(value) => handleChange('status', value as TaskStatus)}>
+              <Select value={formData.status} onValueChange={(value: string) => handleChange('status', value as TaskStatus)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
