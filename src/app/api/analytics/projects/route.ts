@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
 }
 
 async function getProjectAnalytics(supabase: any, projectId: string, startDate: Date, endDate: Date) {
-  // Get project details
+  // Get specific project
   const { data: project, error: projectError } = await supabase
     .from('projects')
     .select(`
@@ -232,6 +232,7 @@ async function getAllProjectsAnalytics(supabase: any, startDate: Date, endDate: 
       description,
       status,
       created_at,
+      updated_at,
       start_date,
       end_date
     `);
@@ -240,97 +241,183 @@ async function getAllProjectsAnalytics(supabase: any, startDate: Date, endDate: 
     throw new Error('Failed to fetch projects');
   }
 
-  // Get tasks for all projects
-  const { data: tasks, error: tasksError } = await supabase
-    .from('tasks')
-    .select(`
-      id,
-      title,
-      status,
-      priority,
-      project_id,
-      created_at,
-      updated_at,
-      due_date,
-      estimated_hours,
-      actual_hours
-    `)
-    .gte('created_at', startDate.toISOString());
+  const allProjectsData = [];
 
-  if (tasksError) {
-    throw new Error('Failed to fetch tasks');
+  for (const project of projects || []) {
+    // Get project tasks
+    const { data: tasks, error: tasksError } = await supabase
+      .from('tasks')
+      .select(`
+        id,
+        title,
+        status,
+        priority,
+        created_at,
+        updated_at,
+        due_date,
+        estimated_hours,
+        actual_hours,
+        assignee_id,
+        profiles (
+          id,
+          full_name,
+          avatar_url
+        )
+      `)
+      .eq('project_id', project.id)
+      .gte('created_at', startDate.toISOString());
+
+    if (tasksError) {
+      console.error('Error fetching tasks for project:', project.id, tasksError);
+      continue;
+    }
+
+    // Get time entries for project tasks
+    const taskIds = tasks?.map((task: any) => task.id) || [];
+    const { data: timeEntries, error: timeError } = await supabase
+      .from('time_entries')
+      .select(`
+        id,
+        task_id,
+        user_id,
+        start_time,
+        end_time,
+        duration,
+        description,
+        created_at,
+        profiles (
+          id,
+          full_name
+        )
+      `)
+      .in('task_id', taskIds)
+      .gte('created_at', startDate.toISOString());
+
+    if (timeError) {
+      console.error('Error fetching time entries for project:', project.id, timeError);
+    }
+
+    // Calculate project metrics
+    const totalTasks = tasks?.length || 0;
+    const completedTasks = tasks?.filter((task: any) => task.status === 'done').length || 0;
+    const inProgressTasks = tasks?.filter((task: any) => task.status === 'in_progress').length || 0;
+    const todoTasks = tasks?.filter((task: any) => task.status === 'todo').length || 0;
+    const reviewTasks = tasks?.filter((task: any) => task.status === 'review').length || 0;
+    
+    const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+    const totalTimeLogged = timeEntries?.reduce((sum: any, entry: any) => sum + (entry.duration || 0), 0) || 0;
+    const averageTimePerTask = totalTasks > 0 ? totalTimeLogged / totalTasks : 0;
+
+    // Team member performance
+    const teamPerformance = tasks?.reduce((acc: any, task: any) => {
+      const userId = task.assignee_id;
+      const userName = task.profiles?.full_name || 'Unassigned';
+      const userAvatar = task.profiles?.avatar_url;
+      
+      if (!acc[userId]) {
+        acc[userId] = {
+          id: userId,
+          name: userName,
+          avatar: userAvatar,
+          totalTasks: 0,
+          completedTasks: 0,
+          inProgressTasks: 0,
+          todoTasks: 0,
+          timeLogged: 0,
+          completionRate: 0
+        };
+      }
+      
+      acc[userId].totalTasks++;
+      if (task.status === 'done') acc[userId].completedTasks++;
+      if (task.status === 'in_progress') acc[userId].inProgressTasks++;
+      if (task.status === 'todo') acc[userId].todoTasks++;
+      
+      // Add time logged for this user
+      const userTimeEntries = timeEntries?.filter((entry: any) => entry.user_id === userId) || [];
+      acc[userId].timeLogged = userTimeEntries.reduce((sum: any, entry: any) => sum + (entry.duration || 0), 0);
+      
+      acc[userId].completionRate = acc[userId].totalTasks > 0 
+        ? (acc[userId].completedTasks / acc[userId].totalTasks) * 100 
+        : 0;
+      
+      return acc;
+    }, {} as Record<string, any>) || {};
+
+    // Priority distribution
+    const priorityDistribution = {
+      low: tasks?.filter((task: any) => task.priority === 'low').length || 0,
+      medium: tasks?.filter((task: any) => task.priority === 'medium').length || 0,
+      high: tasks?.filter((task: any) => task.priority === 'high').length || 0,
+      urgent: tasks?.filter((task: any) => task.priority === 'urgent').length || 0,
+    };
+
+    // Daily progress
+    const dailyProgress = generateProjectDailyProgress(tasks || [], timeEntries || [], startDate, endDate);
+
+    // Project health score (0-100)
+    const healthScore = calculateProjectHealthScore({
+      completionRate,
+      onTimeDelivery: calculateOnTimeDelivery(tasks || []),
+      teamUtilization: calculateTeamUtilization(Object.values(teamPerformance)),
+      timeAccuracy: calculateTimeAccuracy(tasks || [])
+    });
+
+    allProjectsData.push({
+      project,
+      metrics: {
+        totalTasks,
+        completedTasks,
+        inProgressTasks,
+        todoTasks,
+        reviewTasks,
+        completionRate: Math.round(completionRate * 100) / 100,
+        totalTimeLogged: Math.round(totalTimeLogged * 100) / 100,
+        averageTimePerTask: Math.round(averageTimePerTask * 100) / 100,
+        healthScore: Math.round(healthScore * 100) / 100
+      },
+      priorityDistribution,
+      teamPerformance: Object.values(teamPerformance),
+      dailyProgress,
+      insights: generateProjectInsights(tasks || [], timeEntries || [], teamPerformance)
+    });
   }
 
-  // Calculate metrics for each project
-  const projectAnalytics = projects?.map((project: any) => {
-    const projectTasks = tasks?.filter((task: any) => task.project_id === project.id) || [];
-    const totalTasks = projectTasks.length;
-    const completedTasks = projectTasks.filter((task: any) => task.status === 'done').length;
-    const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
-    
-    return {
-      id: project.id,
-      name: project.name,
-      status: project.status,
-      totalTasks,
-      completedTasks,
-      completionRate: Math.round(completionRate * 100) / 100,
-      healthScore: calculateProjectHealthScore({
-        completionRate,
-        onTimeDelivery: calculateOnTimeDelivery(projectTasks),
-        teamUtilization: 75, // Default value
-        timeAccuracy: calculateTimeAccuracy(projectTasks)
-      })
-    };
-  }) || [];
-
-  return {
-    projects: projectAnalytics,
-    summary: {
-      totalProjects: projects?.length || 0,
-      activeProjects: projects?.filter((p: any) => p.status === 'active').length || 0,
-      completedProjects: projects?.filter((p: any) => p.status === 'completed').length || 0,
-      totalTasks: tasks?.length || 0,
-      completedTasks: tasks?.filter((t: any) => t.status === 'done').length || 0,
-      overallCompletionRate: tasks?.length > 0 
-        ? Math.round((tasks.filter((t: any) => t.status === 'done').length / tasks.length) * 100 * 100) / 100
-        : 0
-    }
-  };
+  return allProjectsData;
 }
 
+// Utility functions for analytics calculations
 function generateProjectDailyProgress(tasks: any[], timeEntries: any[], startDate: Date, endDate: Date) {
-  const dailyProgress = [];
-  const current = new Date(startDate);
+  const dailyData = [];
+  const currentDate = new Date(startDate);
   
-  while (current <= endDate) {
-    const dateStr = current.toISOString().split('T')[0];
+  while (currentDate <= endDate) {
+    const dateStr = currentDate.toISOString().split('T')[0];
     
-    const dayTasks = tasks.filter(task => 
-      task.created_at.startsWith(dateStr)
-    );
+    // Tasks completed on this day
+    const tasksCompletedToday = tasks.filter(task => {
+      const completedDate = new Date(task.updated_at).toISOString().split('T')[0];
+      return task.status === 'done' && completedDate === dateStr;
+    }).length;
     
-    const dayCompletedTasks = tasks.filter(task => 
-      task.status === 'done' && task.updated_at.startsWith(dateStr)
-    );
+    // Time logged on this day
+    const timeLoggedToday = timeEntries
+      .filter(entry => {
+        const entryDate = new Date(entry.created_at).toISOString().split('T')[0];
+        return entryDate === dateStr;
+      })
+      .reduce((sum, entry) => sum + (entry.duration || 0), 0);
     
-    const dayTimeEntries = timeEntries.filter(entry =>
-      entry.created_at.startsWith(dateStr)
-    );
-    
-    const dayTimeLogged = dayTimeEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
-    
-    dailyProgress.push({
+    dailyData.push({
       date: dateStr,
-      tasksCreated: dayTasks.length,
-      tasksCompleted: dayCompletedTasks.length,
-      timeLogged: Math.round(dayTimeLogged * 100) / 100
+      tasksCompleted: tasksCompletedToday,
+      timeLogged: Math.round(timeLoggedToday * 100) / 100
     });
     
-    current.setDate(current.getDate() + 1);
+    currentDate.setDate(currentDate.getDate() + 1);
   }
   
-  return dailyProgress;
+  return dailyData;
 }
 
 function calculateProjectHealthScore(metrics: {
@@ -339,10 +426,11 @@ function calculateProjectHealthScore(metrics: {
   teamUtilization: number;
   timeAccuracy: number;
 }) {
+  // Weighted average of different health metrics
   const weights = {
     completionRate: 0.3,
-    onTimeDelivery: 0.3,
-    teamUtilization: 0.2,
+    onTimeDelivery: 0.25,
+    teamUtilization: 0.25,
     timeAccuracy: 0.2
   };
   
@@ -367,20 +455,30 @@ function calculateOnTimeDelivery(tasks: any[]) {
   return (onTimeTasks.length / tasksWithDueDate.length) * 100;
 }
 
-function calculateTeamUtilization(teamMembers: any[]) {
-  if (teamMembers.length === 0) return 0;
+function calculateTeamUtilization(teamPerformance: any[]) {
+  if (teamPerformance.length === 0) return 0;
   
-  const avgCompletionRate = teamMembers.reduce((sum, member) => sum + member.completionRate, 0) / teamMembers.length;
-  return avgCompletionRate;
+  const totalUtilization = teamPerformance.reduce((sum, member) => {
+    // Calculate utilization based on completion rate and time logged
+    const utilizationScore = (member.completionRate + (member.timeLogged > 0 ? 50 : 0)) / 2;
+    return sum + utilizationScore;
+  }, 0);
+  
+  return totalUtilization / teamPerformance.length;
 }
 
 function calculateTimeAccuracy(tasks: any[]) {
-  const tasksWithEstimates = tasks.filter(task => task.estimated_hours && task.actual_hours);
+  const tasksWithEstimates = tasks.filter(task => 
+    task.estimated_hours && task.actual_hours && task.status === 'done'
+  );
+  
   if (tasksWithEstimates.length === 0) return 100;
   
   const accuracyScores = tasksWithEstimates.map(task => {
-    const accuracy = Math.min(task.estimated_hours, task.actual_hours) / Math.max(task.estimated_hours, task.actual_hours);
-    return accuracy * 100;
+    const estimated = task.estimated_hours;
+    const actual = task.actual_hours;
+    const variance = Math.abs(estimated - actual) / estimated;
+    return Math.max(0, 100 - (variance * 100));
   });
   
   return accuracyScores.reduce((sum, score) => sum + score, 0) / accuracyScores.length;
@@ -390,53 +488,53 @@ function generateProjectInsights(tasks: any[], timeEntries: any[], teamPerforman
   const insights = [];
   
   // Task completion insights
-  const completedTasks = tasks.filter(t => t.status === 'done').length;
+  const completedTasks = tasks.filter(task => task.status === 'done').length;
   const totalTasks = tasks.length;
+  const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
   
-  if (totalTasks > 0) {
-    const completionRate = (completedTasks / totalTasks) * 100;
-    if (completionRate > 80) {
-      insights.push({
-        type: 'positive',
-        title: 'Excellent Progress',
-        description: `Project is ${completionRate.toFixed(1)}% complete with strong momentum.`
-      });
-    } else if (completionRate < 30) {
-      insights.push({
-        type: 'warning',
-        title: 'Slow Progress',
-        description: `Only ${completionRate.toFixed(1)}% of tasks completed. Consider reviewing priorities.`
-      });
-    }
-  }
-  
-  // Team performance insights
-  const teamMembers = Object.values(teamPerformance);
-  if (teamMembers.length > 0) {
-    const topPerformer = teamMembers.reduce((top, member) => 
-      member.completionRate > top.completionRate ? member : top
-    );
-    
-    if (topPerformer.completionRate > 90) {
-      insights.push({
-        type: 'positive',
-        title: 'Top Performer',
-        description: `${topPerformer.name} is excelling with ${topPerformer.completionRate.toFixed(1)}% completion rate.`
-      });
-    }
+  if (completionRate > 80) {
+    insights.push({
+      type: 'positive',
+      message: 'Excellent project progress with high completion rate',
+      metric: 'completion_rate',
+      value: completionRate
+    });
+  } else if (completionRate < 50) {
+    insights.push({
+      type: 'warning',
+      message: 'Project completion rate is below expectations',
+      metric: 'completion_rate',
+      value: completionRate
+    });
   }
   
   // Time tracking insights
   const totalTimeLogged = timeEntries.reduce((sum, entry) => sum + (entry.duration || 0), 0);
-  if (totalTimeLogged > 0 && totalTasks > 0) {
-    const avgTimePerTask = totalTimeLogged / totalTasks;
-    if (avgTimePerTask > 8) {
-      insights.push({
-        type: 'info',
-        title: 'Time Investment',
-        description: `Tasks are taking an average of ${avgTimePerTask.toFixed(1)} hours. Consider breaking down complex tasks.`
-      });
-    }
+  const averageTimePerTask = totalTasks > 0 ? totalTimeLogged / totalTasks : 0;
+  
+  if (averageTimePerTask > 8) {
+    insights.push({
+      type: 'info',
+      message: 'Tasks are taking longer than average to complete',
+      metric: 'average_time_per_task',
+      value: averageTimePerTask
+    });
+  }
+  
+  // Team performance insights
+  const teamMembers = Object.values(teamPerformance);
+  const topPerformer = teamMembers.reduce((top, member) => 
+    member.completionRate > top.completionRate ? member : top, 
+    teamMembers[0] || { completionRate: 0, name: 'N/A' }
+  );
+  
+  if (topPerformer.completionRate > 90) {
+    insights.push({
+      type: 'positive',
+      message: `${topPerformer.name} is performing exceptionally well`,
+      metric: 'team_performance',
+      value: topPerformer.completionRate
+    });
   }
   
   return insights;

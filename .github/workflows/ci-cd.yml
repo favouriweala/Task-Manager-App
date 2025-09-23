@@ -304,12 +304,12 @@ jobs:
       run: npm ci
       
     - name: Monitor AI model performance
-      run: npm run test:ai
+      run: npm run ai:monitor
       env:
-        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
+        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         
     - name: Update AI model metrics
-      run: npm run validate-ai-models
+      run: npm run ai:update-metrics
       env:
-        GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
+        GOOGLE_AI_API_KEY: ${{ secrets.GOOGLE_AI_API_KEY }}

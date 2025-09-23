@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -44,6 +44,17 @@ export default function RealTimeProcessingMonitor({ className }: RealTimeProcess
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const updateQueueStatus = useCallback(() => {
+    try {
+      const status = realTimeProcessor.getQueueStatus();
+      setQueueStatus(status);
+      setError(null);
+    } catch (err) {
+      console.error('Error updating queue status:', err);
+      setError('Failed to update queue status');
+    }
+  }, []);
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
@@ -62,18 +73,7 @@ export default function RealTimeProcessingMonitor({ className }: RealTimeProcess
         clearInterval(interval);
       }
     };
-  }, [isMonitoring]);
-
-  const updateQueueStatus = () => {
-    try {
-      const status = realTimeProcessor.getQueueStatus();
-      setQueueStatus(status);
-      setError(null);
-    } catch (err) {
-      console.error('Error updating queue status:', err);
-      setError('Failed to update queue status');
-    }
-  };
+  }, [isMonitoring, updateQueueStatus]);
 
   const handleTestProcessing = async () => {
     if (!user?.id) return;

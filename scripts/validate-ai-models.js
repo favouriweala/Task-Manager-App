@@ -12,7 +12,8 @@ const path = require('path');
 require('dotenv').config();
 
 const REQUIRED_ENV_VARS = [
-  'GOOGLE_GEMINI_API_KEY'
+  'GOOGLE_AI_API_KEY',
+  'NEXT_PUBLIC_GOOGLE_AI_API_KEY'
 ];
 
 const OPTIONAL_ENV_VARS = [

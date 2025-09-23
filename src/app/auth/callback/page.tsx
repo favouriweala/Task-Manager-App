@@ -18,7 +18,7 @@ function AuthCallbackContent() {
         // Check for auth tokens in hash or search params
         const accessToken = hashParams.get('access_token') || urlParams.get('access_token')
         const refreshToken = hashParams.get('refresh_token') || urlParams.get('refresh_token')
-        const tokenType = hashParams.get('token_type') || urlParams.get('token_type')
+        const _tokenType = hashParams.get('token_type') || urlParams.get('token_type')
         
         if (accessToken && refreshToken) {
           // Exchange tokens for session
@@ -63,7 +63,7 @@ function AuthCallbackContent() {
     }
 
     handleAuthCallback()
-  }, [router])
+  }, [router, searchParams])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -105,10 +105,6 @@ export default function AuthCallbackPage() {
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               Loading...
             </h2>
-            
-            <p className="text-gray-600 dark:text-gray-400">
-              Please wait while we load the page.
-            </p>
           </div>
         </div>
       </div>

@@ -27,7 +27,6 @@ export default function LoginPage() {
 
             {/* Login Form */}
             <LoginForm />
-
             {/* Sign up link */}
             <div className="mt-6 text-center">
               <p className="text-gray-600 dark:text-gray-400">

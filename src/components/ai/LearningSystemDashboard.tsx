@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -47,13 +47,7 @@ export default function LearningSystemDashboard({ className }: LearningSystemDas
   const [patterns, setPatterns] = useState<BehaviorPattern[]>([]);
   const [processingRecommendation, setProcessingRecommendation] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (user?.id) {
-      loadLearningData();
-    }
-  }, [user?.id]);
-
-  const loadLearningData = async () => {
+  const loadLearningData = useCallback(async () => {
     if (!user?.id) return;
 
     try {
@@ -75,7 +69,13 @@ export default function LearningSystemDashboard({ className }: LearningSystemDas
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (user?.id) {
+      loadLearningData();
+    }
+  }, [user?.id, loadLearningData]);
 
   const handleRecommendationFeedback = async (
     recommendationId: string, 

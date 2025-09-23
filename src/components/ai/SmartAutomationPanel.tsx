@@ -21,8 +21,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   BarChart3,
-  Users,
-  Calendar,
   RefreshCw
 } from 'lucide-react';
 

@@ -1,10 +1,7 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { 
-  ArrowRight, Sparkles, Shield, Zap, Users, BarChart3, Brain, 
-  Code, Database, Cloud, Cpu, GitBranch, Smartphone, Globe,
-  CheckCircle, Star, TrendingUp, Clock, Target, Workflow,
-  MessageSquare, FileText, Calendar, Settings, Lock, Award
+  ArrowRight, Sparkles, Shield, Zap, Users, BarChart3, Brain
 } from 'lucide-react'
 
 export const metadata: Metadata = {

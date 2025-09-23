@@ -37,7 +37,6 @@ export default function VerifyEmailPage() {
               We&apos;ve sent a verification link to your email address. 
               Please click the link to verify your account and complete the setup.
             </p>
-
             {/* Back to signup link */}
             <Link 
               href="/auth/signup" 
