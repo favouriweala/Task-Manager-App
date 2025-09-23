@@ -34,7 +34,7 @@ export default function VerifyEmailPage() {
               Check your email
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              We've sent a verification link to your email address. 
+              We&apos;ve sent a verification link to your email address. 
               Please click the link to verify your account and complete the setup.
             </p>
 

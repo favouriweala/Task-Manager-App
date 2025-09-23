@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { BarChart3, Calendar, Download, Filter, TrendingUp, Clock, DollarSign } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { DatePickerWithRange } from '../ui/date-range-picker';
 import { Badge } from '../ui/badge';
 import { TimeTrackingService } from '../../lib/services/timeTrackingService';

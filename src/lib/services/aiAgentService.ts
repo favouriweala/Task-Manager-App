@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createClient } from '@supabase/supabase-js';
-import { Database, AIAgent, AIAgentAction, InsertAIAgentAction } from '../database/types';
+import { Database, AIAgent, AIAgentAction } from '../database/types';
 import { aiSimilarityService, ProjectSimilarity } from './aiSimilarityService';
 import { notificationService } from './notificationService';
 

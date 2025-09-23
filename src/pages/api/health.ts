@@ -1,7 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { HealthCheckMonitor } from '@/lib/monitoring/sentry';
 import { aiCache } from '@/lib/cache/ai-cache';
-import { rateLimitStore } from '@/lib/security/input-validation';
 
 interface HealthCheckResponse {
   status: 'healthy' | 'degraded' | 'unhealthy';
