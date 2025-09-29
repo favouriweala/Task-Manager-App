@@ -1,15 +1,15 @@
 import { Metadata } from 'next'
 import AuthGuard from '@/components/auth/auth-guard'
 import { AppLayout } from '@/components/layout/AppLayout'
-import { AnalyticsDashboard } from '@/components/analytics/AnalyticsDashboard'
-import { BarChart3, TrendingUp, Brain, Target } from 'lucide-react'
+import { EnhancedProjectDashboard } from '@/components/projects/EnhancedProjectDashboard'
+import { FolderOpen, BarChart3, Brain, Users, Target, Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Analytics | Zyra',
-  description: 'Advanced analytics and insights for data-driven task management and productivity optimization',
+  title: 'Projects | Zyra',
+  description: 'Google-inspired project management with AI-powered insights, advanced analytics, and intelligent collaboration tools',
 }
 
-export default function AnalyticsPage() {
+export default function ProjectsPage() {
   return (
     <AuthGuard>
       <AppLayout>
@@ -20,19 +20,25 @@ export default function AnalyticsPage() {
               <div className="flex flex-col space-y-4 sm:space-y-6 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
                 <div className="flex items-center space-x-3 sm:space-x-4">
                   <div className="p-2 sm:p-3 bg-white/20 backdrop-blur-sm rounded-xl sm:rounded-2xl">
-                    <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                    <FolderOpen className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-white">Analytics & Insights</h1>
-                    <p className="text-blue-100 mt-1 text-sm sm:text-base">Data-driven insights to optimize your productivity</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white">Project Command Center</h1>
+                    <p className="text-blue-100 mt-1 text-sm sm:text-base">AI-powered project management with intelligent insights</p>
                   </div>
                 </div>
                 
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   <div className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-                    <TrendingUp className="h-4 h-4 sm:h-5 sm:w-5 text-white" />
+                    <Target className="h-4 h-4 sm:h-5 sm:w-5 text-white" />
                     <span className="text-xs sm:text-sm font-medium text-white">
-                      Efficiency
+                      Active Projects
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
+                    <BarChart3 className="h-4 h-4 sm:h-5 sm:w-5 text-white" />
+                    <span className="text-xs sm:text-sm font-medium text-white">
+                      Analytics
                     </span>
                   </div>
                   <div className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
@@ -41,20 +47,14 @@ export default function AnalyticsPage() {
                       AI Insights
                     </span>
                   </div>
-                  <div className="flex items-center space-x-2 px-3 sm:px-4 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30">
-                    <Target className="h-4 h-4 sm:h-5 sm:w-5 text-white" />
-                    <span className="text-xs sm:text-sm font-medium text-white">
-                      Goals Met
-                    </span>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Analytics Dashboard Content */}
+          {/* Main Content */}
           <div className="container-mobile sm:container-tablet lg:container-desktop mobile-padding sm:px-6 lg:px-8 py-6 sm:py-8">
-            <AnalyticsDashboard />
+            <EnhancedProjectDashboard />
           </div>
         </div>
       </AppLayout>
